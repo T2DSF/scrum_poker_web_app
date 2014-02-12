@@ -1,0 +1,36 @@
+@font-face {
+ /* font-family: "biko";
+  src: url(biko.otf) format("opentype");*/
+
+  font-family: "biko";
+  src: url(biko.otf) format("opentype");
+}
+
+
+body{
+	background-color: #222;
+	margin: 0px;
+	padding: 0px;
+	overflow: auto;
+	font-family: 'biko', sans-serif;
+}
+
+#container{
+	
+	width:320px;
+	height: 568px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
+
+	background-color: #000;
+	background: url('bg.gif');
+	background-repeat: no-repeat;
+	position: relative;
+	color: #fff;
+
+}
+
+
+

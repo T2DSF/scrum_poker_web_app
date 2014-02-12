@@ -1,4 +1,4 @@
-scrum_poker_web_app
-===================
+scrum poker
+=========
 
-a web app that can be used offline
+scrum poker
