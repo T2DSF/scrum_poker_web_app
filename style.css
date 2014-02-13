@@ -37,53 +37,115 @@ header{
 .contact_form h2{
 	font-size: 24px;
 	color: #00afea;
-	width: 40%;
+	width: 100%;
+	text-align: center;
 	margin: auto;
 	padding-top: 180px;
 
 }
 
+.screen input {
 
-.contact_form input {
-    height:22px; 
-    width:60%;
-    margin: auto;
-    text-transform: uppercase; 
-    text-align: center;
-    padding:5px 8px;
-}
+	position: relative;
+	width: 250px;
+	height: 44px;
+	left: 50%;
+	margin-left: -125px;
 
-/* Button Style */
-button.submit {
-    width: 100px;
-	text-transform: lowercase;
-	margin:auto;
-    background-color: #00afea;
-    border-radius: 6px;
+	font-size: 33px; 
+	border-radius: 6px;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -ms-border-radius: 6px;
     -o-border-radius: 6px;
-    color: white;
-    padding: 6px 20px;
+	text-transform: uppercase; 
     text-align: center;
+    border: 1px solid #fff;
+
+}
+
+
+
+/* Button Style */
+button.submit {
+	position: relative;
+    width: 100px;
+    height: 25px;
+    left: 50%;
+    margin-top: 11px;
+    margin-left: -50px;
+
+	text-transform: lowercase;
+	font-size: 18px;
+    background-color: #00afea;
+    border: 1px solid #00afea;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    color: white;
+    padding: 0px;
+    cursor: pointer;
 }
 button.submit:hover {
-    opacity:.85;
-    cursor: pointer; 
+    background-color: #ec2761;
+    border: 1px solid #ec2761;
+     
 }
 
 
+footer{
+	width: 320px;
+	margin: auto;
+	position: absolute;
+	bottom: 0px;
+	height: 55px;
+	/*overflow: hidden;*/
+	/*background-color: #333;
+	//background-image: url('img/logo.png');
+	background-repeat: no-repeat;
+	background-position: center;*/
+}
+
+footer .navItem{
+	display: block;
+	width:25px;
+	height: 25px;
+	margin: 14px;
+	float: left;
+	cursor: pointer;	
+}
+
+footer .navItem:hover{
+	background-position: 0 -25px;
+}
 
 
+footer #settings{
+	/*float: left;*/
+	background-image: url('img/settings.png'); 
+}
+footer #info{
+	/*float: right;*/
+	background-image: url('img/info.png'); 
+}
 
+footer #status{
+	color: #494949;
+	font-size: 20px;
+	width: 214px;
+	float: left;
+	text-align: center;
+	padding-top: 17px;
+}
 
 
 #container .screen{
-	/*display: none;*/
+	display: none;
 }
 
-#container .screen.active{
+#container .active{
 	display: block;
 }
 
@@ -97,8 +159,6 @@ button.submit:hover {
 	margin-right: auto;
 
 	background-color: #231f20;
-	/*background: url('bg.gif');
-	background-repeat: no-repeat;*/
 	position: relative;
 	color: #fff;
 

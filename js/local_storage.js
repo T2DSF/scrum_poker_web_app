@@ -1,25 +1,27 @@
-function supports_html5_storage() {
-  try {
-    return 'localStorage' in window && window['localStorage'] !== null;
-  } catch (e) {
-    return false;
-  }
-}
+scrumapp.ls = {
+	usernameCompleteCallback: undefined,
 
-function set_local_storage_name(n){
-	console.log('set_local_storage_name called');
-	localStorage.name = n;
-}
-
-function get_local_storage_name(){
-		console.log('get_local_storage_name called');
+	supports_html5_storage: function() {
+	  try {
+	    return 'localStorage' in window && window['localStorage'] !== null;
+	  } catch (e) {
+	    return false;
+	  }
+	},
+	set_local_storage_name: function(n, callback){
+		console.log('set_local_storage_name called');
+		localStorage.name = n;
+		callback();
+	},
+	get_local_storage_name: function(){
+		// console.log('get_local_storage_name called');
 		if(localStorage.name){
 			return localStorage.name;
 		}else{
 			return false;
-		}
-}
-
-function clear_local_storage(){
-	localStorage.removeItem("name");
+		}	
+	},
+	clear_local_storage:function(){
+		localStorage.removeItem("name");
+	}
 }
