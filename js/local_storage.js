@@ -22,6 +22,8 @@ scrumapp.ls = {
 		}	
 	},
 	clear_local_storage:function(){
+
 		localStorage.removeItem("name");
+		console.log("name erased");
 	}
 }

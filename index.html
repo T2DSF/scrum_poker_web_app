@@ -29,7 +29,7 @@
   							<h2>your name:</h2>
     					</li>
 						<li>
-		      						<input type="text" id="username" placeholder="name" maxlength="8"/>
+		      						<input type="text" id="username" placeholder="name here" maxlength="7"/>
 						</li>
 					</ul>
 				</form>
@@ -42,11 +42,11 @@
   							<h2>enter secret code:</h2>
     					</li>
 						<li>
-    						<input type="tel" id="code"/>
+    						<input type="tel" placeholder="secret code" id="secretcode" maxlength="5"/>
 						</li>
 					</ul>
 				</form>
-				<button class="submit" onclick="joinTable()">Join</button>
+				<button class="submit" onclick="scrumapp.attemptToJoin()">Join</button>
 			</div>
 			<div class="screen" id="game"></div>
 			<div class="screen" id="waiting"></div>

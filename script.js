@@ -42,6 +42,10 @@ var scrumapp = {
 		console.log("script.setUsername() ");
 		this.views["setup"].setUsername();
 	},
+	attemptToJoin: function(){
+		console.log("scrumapp.attemptToJoin() ");
+		this.views["jointable"].attemptToJoin();	
+	},
 	setView: function(screenName){
 		console.log("***** settingScreen: "+screenName);
 		

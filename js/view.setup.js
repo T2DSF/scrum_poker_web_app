@@ -7,7 +7,7 @@ scrumapp.views["setup"] = {
 	},
 	setStatus: function(){
 		console.log($('footer div#status').html());
-		$('footer div#status').text = "step 1";
+		$('footer div#status').text("welcome, guest!");
 	},
 	setUsername: function(){
 		// console.log("view.setup.setUsername() called");
