@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 
 var c;
@@ -15,20 +16,50 @@ var gridW, gridH;
 var headerSize = 40;
 var test = {x:0, y:0};
 var xOffset, yOffset;
-init();
+initScreen();
+// console.log('initialize with: '+get_local_storage_name());
 
-
-
+function setName(){
+	console.log('setName');
+	var b = document.getElementById('username').value;
+	console.log('setName: '+b+" <<");
+	set_local_storage_name(b);
+	console.log("name is set. retreiving: "+ get_local_storage_name());
+	//local storage
+}
+window.setName = setName;
 
 function init(){
-	document.panel = this;
+	initScreen();
 	addEventListener("touchstart", doTouchStart, false);
 	addEventListener("touchmove", doTouchMove, false);
 	addEventListener("touchend", doTouchEnd, false);
 	addEventListener("mousedown", doTouchStart, false);
 	addEventListener("mouseup", doTouchEnd, false);
-	initCanvas();
-	initTimer();
+	//initCanvas();
+	//initTimer();
+}
+
+function initScreen(){
+	console.log("initScreen");
+	if( !get_local_storage_name() ){
+		setScreen("setup");
+	}else{
+		setScreen("login")
+	}
+}
+
+function setScreen(screenName){
+	console.log("settingScreen: "+screenName);
+	
+	var activeScreen = $("#container .screen.active")[0];
+    if (activeScreen) {
+        $("#container .screen.active").removeClass("active");
+    }
+   var id = "#"+screenName;
+   console.log(id);
+   $(id).addClass('.screen.active');
+
 }
 
 function initTimer(){
