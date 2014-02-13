@@ -24,8 +24,8 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 
-	background-color: #000;
-	background: url('bg.gif');
+	background-color: #666;
+	/*background: url('bg.gif');*/
 	background-repeat: no-repeat;
 	position: relative;
 	color: #fff;

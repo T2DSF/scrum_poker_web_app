@@ -13,6 +13,8 @@ var w = 320;
 var h = 480;
 var gridW, gridH;
 var headerSize = 40;
+var test = {x:0, y:0};
+var xOffset, yOffset;
 init();
 
 
@@ -60,26 +62,31 @@ function doTouchMove(e){
 
 function doTouchEnd(e){
 	e.preventDefault();
-	console.log("released");
+	//console.log("released");
 }
 
 function pressedCheck(e){
 	// console.log(e.pageX+" "+e.clientX);
 	var obj; 
-	var clickPt = {x:e.pageX, y:e.pageY};
+	test = {x:e.pageX-xOffset-(btnRadius*2), y:e.pageY};
+	//console.log(test.x+" "+test.y);
+	var clickPt = {x:e.pageX-xOffset-(btnRadius*2), y:e.pageY};
 	var dist;
 	//console.log("clickPt  is: "+clickPt.x+" | "+clickPt.y);
 	for (var i = 0; i < btnArr.length; i++) {
 		obj = btnArr[i];
 
-		dist = Math.sqrt( (clickPt.x-obj.x)*(clickPt.x-obj.x) + (clickPt.y-obj.y)+(clickPt.y-obj.y) );
+		dist = checkDist(obj, clickPt);
 		//console.log(clickPt.y+" "+obj.y);
-		//console.log(dist+"  "+btnRadius);
-		if(dist < btnRadius){
+		//console.log(i+": "+dist+"  "+btnRadius);
+		if(dist < btnRadius/3){
 			//hit
-			//console.log('got me '+obj.i);
+			obj.isClicked = true;
+			console.log('click '+fibNums[obj.i]);
 		// }else{
 			// console.log()
+		}else{
+			obj.isClicked = false;
 		}
 
 
@@ -87,14 +94,29 @@ function pressedCheck(e){
 	}
 }
 
+function checkDist(a,b){
+var dist = 0;
+var xx = b.x - a.x;
+xx = xx*xx;
+var yy = b.y - a.y;
+yy = yy*yy;
+dist = Math.sqrt( xx + yy );
+
+
+return dist;
+}
+
 function initGrid(){
 	gridW = ((buttonCount-1)%gridCount)*btnRadius;
 	gridH = Math.floor((buttonCount-1)/gridCount)*btnRadius;
-	var xOffset = w/2-(gridW/2);
-	var yOffset = h/2-(gridH/2) + headerSize;
+	xOffset = w/2-(gridW/2);
+	yOffset = h/2-(gridH/2) + headerSize;
 	for(var i=0; i<buttonCount; i++){
-		var obj = {};
-		obj.i = i;
+		var obj = {
+			i:i,
+			isClicked: false
+		};
+		
 		obj.x = (i%gridCount)*btnRadius+ xOffset;
 		obj.y = Math.floor(i/gridCount)* btnRadius + yOffset;
 		//console.log(obj.y);
@@ -107,18 +129,36 @@ function initGrid(){
 }
 
 function draw(){
-	ctx.clearRect(0,0,w, h);
+	//ctx.clearRect(0,0,w, h);
 	for (var i = 0; i < btnArr.length; i++) {
 		var obj = btnArr[i];
 		ctx.beginPath();
 		ctx.arc(obj.x, obj.y, btnRadius/3, 0, Math.PI*2);
-		ctx.fillStyle = '#fff';
+		
+		if(obj.isClicked){
+			ctx.fillStyle = '#fb1e60';	
+		}else{
+			ctx.fillStyle = '#fff';
+		}
+		
 		ctx.fill();
 
-		ctx.fillStyle = "#00afea";
+		
+		if(obj.isClicked){
+			ctx.fillStyle = "#fff";
+		}else{
+			ctx.fillStyle = "#00afea";
+		}
 		ctx.fillText(fibNums[i], obj.x, obj.y + fontSize/2);
 
 	}
+
+	// ctx.beginPath();
+	// ctx.arc(test.x, test.y, 10, 0, Math.PI*2);
+	// ctx.fillStyle = '#f00';
+	// ctx.fill();
+	
+
 }
 
 
