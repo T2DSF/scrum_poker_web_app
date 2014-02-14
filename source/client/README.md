@@ -1,4 +1,0 @@
-scrum poker
-=========
-
-scrum poker
