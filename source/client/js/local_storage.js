@@ -9,7 +9,7 @@ scrumapp.ls = {
 	  }
 	},
 	set_local_storage_name: function(n, callback){
-		console.log('set_local_storage_name called');
+		// console.log('set_local_storage_name called' );
 		localStorage.name = n;
 		callback();
 	},
@@ -24,6 +24,6 @@ scrumapp.ls = {
 	clear_local_storage:function(){
 
 		localStorage.removeItem("name");
-		console.log("name erased");
+		// console.log("name erased");
 	}
 }
