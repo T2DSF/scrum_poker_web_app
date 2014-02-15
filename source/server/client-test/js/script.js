@@ -3,14 +3,14 @@ $(document).ready(function() {
 	$("#startTable").bind('click', handleStartTableClick);
 	$("#joinTable").bind('click', handleJoinTableClick);
 
-	$("#startHand").bind('click', function() {
+	/*$("#startHand").bind('click', function() {
 		PokerServer.dealer.startHand();
 	});
 	$("#endHand").bind('click', function() {
 		PokerServer.dealer.endHand();
 	});
 
-	$(".pointCard").bind('click', handleScoreSelect);
+	$(".pointCard").bind('click', handleScoreSelect);*/
 });
 
 // start table button handler
@@ -35,7 +35,7 @@ function handleTableConnect(data) {
 		$("#dealerControls").removeClass("hidden");
 	}
 	$("#tableId").text(PokerServer.tableId);
-
+	console.log(PokerServer+"  "+handlePlayerConnect);
 	// after we connect to the table, register callbacks for all the server events
 	PokerServer.handlePlayerConnectCallback(handlePlayerConnect);
 	PokerServer.handleHandBeginCallback(handleHandBegin);

@@ -11,16 +11,19 @@
 		<title>Scrum Poker - Sony</title>
 		
 		<!-- <link type="text/css" href="css/normalize.css" rel="stylesheet" /> -->
-		<link type="text/css" href="style.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
 	 	<script src="js/libs/jquery-1.6.2.min.js"></script>
 		<script src="script.js"></script>
 		<script src="js/view.setup.js"></script>
 		<script src="js/view.jointable.js"></script>
+		<script src="js/view.limbo.js"></script>
 		<script src="js/view.table.js"></script>
+		<script src="js/view.progress.js"></script>
+		<script src="js/view.results.js"></script>
 		<script src="js/local_storage.js"></script>
 		<script src="js/libs/modernizr-2.0.6.min.js"></script>
   		<script src="js/libs/socket.io.js"></script>
-  		<script src="client.js"></script>
+  		<script src="js/client.js"></script>
 	</head>
 
 	<body>	
@@ -47,7 +50,7 @@
   							<h2>enter secret code:</h2>
     					</li>
 						<li>
-    						<input type="tel" placeholder="secret code" id="tableIdInput" maxlength="5"/>
+    						<input type="text" placeholder="secret code" id="tableIdInput" maxlength="5"/>
 						</li>
 					</ul>
 				</form>
@@ -55,11 +58,22 @@
 				<p> </p>
 				<button class="submit" id="startTableBtn">start table</button>
 			</div>
+			<div class="screen" id="limbo">
+				<button id="startHand" class="submit">start hand</button>
+				<h2 class="code" id="tableId"></h2>
+			</div>
+			
 			<div class="screen" id="table">
 				<canvas id='tablecanvas' width='320' height='568'></canvas>
 			</div>
-			<div class="screen" id="waiting"></div>
-			<div class="screen" id="results"></div>
+			<div class="screen" id="progress">
+				<button id="endHand" class="submit">end hand</button>
+				<canvas id='waitingcanvas' width='320' height='568'></canvas>
+			</div>
+			<div class="screen" id="results">
+				<button id="restartHand" class="submit">restart</button>
+				<canvas id='resultscanvas' width='320' height='568'></canvas>
+			</div>
 			<!--  -->
 			<footer>
 				<div class="navItem" id="settings"></div>
