@@ -3,6 +3,9 @@ var app = require('http').createServer(handler),
   fs = require('fs'),
   ScrumPoker = require('./ScrumPoker');
 
+io.configure( function(){
+    io.set('origin', '*.t2dsf.com/*:*');
+});
 app.listen(8020);
 
 function handler (req, res) {
@@ -13,6 +16,9 @@ function handler (req, res) {
       return res.end('Error loading index.html');
     }
 
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.writeHead(200);
     res.end(data);
   });
@@ -37,8 +43,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('updatePlayerInfo', function(data) {
 		ScrumPoker.updatePlayerData(socket, data.tableId, data.playerData);
 	});
-	socket.on('playerLeaving', function(data) {
-		ScrumPoker.removePlayer(socket, data.tableId, data.playerData);
+	socket.on('disconnect', function(data) {
+		ScrumPoker.leaveTable(socket);
 	});
 });
 

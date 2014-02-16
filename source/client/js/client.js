@@ -6,13 +6,13 @@
 		connect: function() {
 			var self = this;
 
-			if(window.location.href.indexOf("t2dsf.com") < 0){
+			// if(window.location.href.indexOf("t2dsf.com") < 0){
 				//t2dsf.com is not in the domain, it's local
-				socket = io.connect('http://localhost:8020');	
-			}else{
+				//socket = io.connect('http://localhost:8020');	
+			// }else{
 				//we're live
 				socket = io.connect('http://t2dsf-scrum-poker-server.nodejitsu.com:80');
-			}
+			// }
 			// socket events for the initial connection
 			socket.on('connect', function() {
 				if(PokerServer.clientType === "dealer") {
@@ -63,6 +63,7 @@
 				}
 			});
 			socket.on('playerDisconnect', function(playerData) {
+				console.log('playerDisconnect', playerData);
 				delete PokerServer.players[playerData.name];
 				
 				if(PokerServer.playerDisconnectCallback !== undefined) {
@@ -140,6 +141,7 @@
 				server.showHand(value);
 			},
 			updatePlayerName: function(playerName) {
+				var oldData = PokerServer.playerData;
 				delete PokerServer.players[PokerServer.playerName];
 
 				PokerServer.playerName = playerName;
@@ -168,6 +170,12 @@
 			// playerData = { name: "" }
 
 			this.playerConnectCallback = callback;
+		},
+		handlePlayerDisconnectCallback: function(callback) {
+			// callback(playerData)
+			// playerData = { name: "" }
+
+			this.playerDisconnectCallback = callback;
 		},
 		handleHandProgressCallback: function(callback) {
 			// callback(progressPercent)

@@ -1,6 +1,6 @@
 {
   "name": "scrum_poker_server",
-  "version": "0.0.1",
+  "version": "0.0.1-12",
   "description": "Socket.io server for the scrum poker application",
   "main": "server.js",
   "scripts": {
@@ -11,5 +11,12 @@
   "license": "BSD-2-Clause",
   "devDependencies": {
     "socket.io": "~0.9.16"
+  },
+  "bundleDependencies": [
+    "socket.io"
+  ],
+  "subdomain": "t2dsf-scrum-poker-server",
+  "engines": {
+    "node": "0.10.x"
   }
 }
