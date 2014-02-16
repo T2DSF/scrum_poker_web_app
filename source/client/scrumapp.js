@@ -18,13 +18,20 @@ var scrumapp = {
 		var tableView = scrumapp.views["table"];
 		var progressView = scrumapp.views["progress"];
 		var resultsView = scrumapp.views["results"];
+		//
+		//$('#newTableBtn').bind('mousedown touchstart', $.proxy(this.handleNewTableClick, this));
+		$('#container').bind('touchmove', $.proxy(this.prevent, this));
+		//
 		// after we connect to the table, register callbacks for all the server events
-		
 		PokerServer.handlePlayerConnectCallback(joinView.handlePlayerConnect);
 		PokerServer.handleHandBeginCallback(tableView.handleHandBegin);
 		PokerServer.handleHandProgressCallback(progressView.handleHandProgress);
 		PokerServer.handleHandCompleteCallback(progressView.handleHandComplete);
-		
+		//
+	},
+	prevent: function(e){
+		e.preventDefault();
+		console.log(e);
 	},
 	initScreen: function(){
 

@@ -225,8 +225,8 @@ scrumapp.views["results"] = {
 		obj.highest = highest;
 		obj.lowest = lowest;
 		//to keep one decimal place
-		// ave = Math.round(ave * 100) / 100;
-		ave = Math.round(ave);
+		ave = Math.round(ave * 100) / 100;
+		// ave = Math.round(ave);
 		obj.average = ave;
 		return obj;
 	},

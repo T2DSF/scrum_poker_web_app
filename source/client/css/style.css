@@ -24,7 +24,7 @@ header{
 }
 
 .contact_form ul {
-    width:320px;
+    /*width:320px;*/
     list-style-type:none;
     margin:0px;
     padding:0px;
@@ -32,6 +32,12 @@ header{
 .contact_form li{
     padding:5px; 
     position:relative;
+}
+
+canvas {
+	width: 320px;
+	left:; 50%;
+	margin-left: 160px;
 }
 
 h2{
@@ -97,14 +103,14 @@ button.submit:hover {
     border: 1px solid #ec2761;
      
 }
-
-
 footer{
 	width: 320px;
-	margin: auto;
-	position: absolute;
-	bottom: 0px;
 	height: 55px;
+	left: 50%;
+	margin: auto;
+	margin-left: -160px;
+	position: absolute;
+	bottom: 10px;
 	/*overflow: hidden;*/
 	/*background-color: #333;
 	//background-image: url('../img/logo.png');
@@ -163,7 +169,7 @@ footer #status{
 
 #container{
 	
-	width:320px;
+	/*width:320px;*/
 	height: 568px;
 	margin-top: 0px;
 	margin-bottom: 0px;

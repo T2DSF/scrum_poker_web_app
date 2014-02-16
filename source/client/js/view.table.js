@@ -139,7 +139,7 @@ scrumapp.views["table"] = {
 			ctx.arc(obj.x, obj.y, this.btnRad, 0, Math.PI*2);
 			
 			if(obj.isClicked){
-				ctx.fillStyle = scrumapp.colors.color1;	
+				ctx.fillStyle = scrumapp.colors.color2;	
 			}else{
 				ctx.fillStyle = scrumapp.colors.color4;
 			}

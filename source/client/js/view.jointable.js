@@ -62,8 +62,8 @@ scrumapp.views["jointable"] = {
 		$('div#settings').click(function(){
 			scrumapp.ls.clear_local_storage();
 			scrumapp.initScreen();
-			$('#username').val("");
-			$('#secretcode').val("");
+			$('#playerNameInput').val("");
+			$('#tableIdInput').val("");
 		})
 	}
 }
