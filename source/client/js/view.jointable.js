@@ -3,9 +3,9 @@ scrumapp.views["jointable"] = {
 	init: function(){
 		this.setStatus();
 		this.setClearBtn();
-		$('#submitCodeBtn').bind('mousedown touchbegin', $.proxy(this.handleJoinTableClick, this));
+		$('#submitCodeBtn').bind('mousedown touchstart', $.proxy(this.handleJoinTableClick, this));
 		//
-		$('#newTableBtn').bind('mousedown touchbegin', $.proxy(this.handleNewTableClick, this));
+		$('#newTableBtn').bind('mousedown touchstart', $.proxy(this.handleNewTableClick, this));
 	},
 	setStatus: function(){
 		// console.log($('footer div#status').html());
@@ -14,6 +14,7 @@ scrumapp.views["jointable"] = {
 	},
 	handleNewTableClick: function(e){
 		console.log("handleNewTableClick()");
+		$('footer div#status').text("starting new table");
 		// var name = $('#playerNameInput').val();
 		var name = scrumapp.ls.get_local_storage_name();
 		if(name!=""){
@@ -32,9 +33,16 @@ scrumapp.views["jointable"] = {
 	//
 	//
 	handleTableConnect: function(data) {
-		console.log("handleTableConnect", PokerServer.tableId, data);
+		console.log("handleTableConnect", PokerServer.tableId, data, +"  "+PokerServer.clientType);
+
 		scrumapp.setView("limbo");
 		scrumapp.views["limbo"].showId(PokerServer.tableId);
+		if(PokerServer.clientType == "dealer"){
+			$('#startHand').removeClass('hidden');
+			$('footer div#status').text("start when you're ready");
+		}else{
+			$('#startHand').addClass('hidden');
+		}
 		//
 	},
 	// callback after a new player joins

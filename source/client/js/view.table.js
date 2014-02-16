@@ -17,20 +17,24 @@ scrumapp.views["table"] = {
 	headerSize: 40,
 	xOffset: undefined, 
 	yOffset: undefined,
+	firstRun: true,
 	// test: {x:40, y:40},
 	
 
 	init: function(){
 		this.itemRadius = 140-(this.margin*2),
-		 this.btnRad = this.itemRadius/2.7;
+		this.btnRad = this.itemRadius/2.7;
 		this.setStatus();
-		// console.log("table.init() called");
+		// console.log("table.init() called "+ this.fibNums);
 		this.initEvents();
-		this.initCanvas();
-		this.initTimer();
+		if(this.firstRun){
+			this.initCanvas();
+			this.initTimer();
+			this.firstRun = false;
+		}
 	},
 	initEvents: function(){
-		$(window).bind('mousedown touchbegin', $.proxy(this.handleClick, this));
+		$(window).bind('mousedown touchstart', $.proxy(this.handleClick, this));
 		//window.addEventListener("touchstart", $.proxy(this.doTouchStart, this), false);
 		//window.addEventListener("mousedown", $.proxy(this.doTouchStart, this), false);
 	},
@@ -79,13 +83,15 @@ scrumapp.views["table"] = {
 	},
 	handleScoreSelected: function(value) {
 		// console.log('you selected', value);
+		$(window).unbind('mousedown touchstart', $.proxy(this.handleClick, this));
 		PokerServer.player.showHand(value);
 		scrumapp.setView("progress");
 	},
 	handleClick: function(e){
 		//console.log("pressed");
 		e.preventDefault();	
-		this.pressedCheck(e);
+		this.pressedCheck(e);	
+		
 	},
 	checkDist: function(a,b){
 		var dist = 0;
@@ -133,18 +139,18 @@ scrumapp.views["table"] = {
 			ctx.arc(obj.x, obj.y, this.btnRad, 0, Math.PI*2);
 			
 			if(obj.isClicked){
-				ctx.fillStyle = '#fb1e60';	
+				ctx.fillStyle = scrumapp.colors.color1;	
 			}else{
-				ctx.fillStyle = '#fff';
+				ctx.fillStyle = scrumapp.colors.color4;
 			}
 			
 			ctx.fill();
 
 			
 			if(obj.isClicked){
-				ctx.fillStyle = "#fff";
+				ctx.fillStyle = scrumapp.colors.color4;
 			}else{
-				ctx.fillStyle = "#00afea";
+				ctx.fillStyle = scrumapp.colors.color1;
 			}
 			ctx.fillText(this.fibNums[i], obj.x, obj.y + this.fontSize/2);
 

@@ -4,9 +4,11 @@ var scrumapp = {
 		color1: "#00afea",
 		color2: "#ec2761",
 		color3: "#494949",
-		color4: "#FFFFFF"
+		color4: "#FFFFFF",
+		color5: "#000"
 	},
 	curScore: 0,
+	curScreen: "",
 	//initScreen(),
 
 	init: function(){
@@ -17,6 +19,7 @@ var scrumapp = {
 		var progressView = scrumapp.views["progress"];
 		var resultsView = scrumapp.views["results"];
 		// after we connect to the table, register callbacks for all the server events
+		
 		PokerServer.handlePlayerConnectCallback(joinView.handlePlayerConnect);
 		PokerServer.handleHandBeginCallback(tableView.handleHandBegin);
 		PokerServer.handleHandProgressCallback(progressView.handleHandProgress);
@@ -40,10 +43,14 @@ var scrumapp = {
 	    }
 	   var id = "#"+screenName;
 	   // console.log(id);
+	   this.curScreen=screenName;
 	   $(id).addClass('active');
 	   // console.log(this.views.length);
 	   this.views[screenName].init();
 
+	},
+	handleClick: function(e){
+		e.preventDefault();
 	}
 	
 

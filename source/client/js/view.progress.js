@@ -62,7 +62,7 @@ scrumapp.views["progress"] = {
 	    ctx.beginPath();
 	    
 	    ctx.arc(centerX, centerY, radius, 0, Math.PI*2);
-	    ctx.fillStyle = "#494949";
+	    ctx.fillStyle = scrumapp.colors.color3;
 	    // ctx.fillStyle = "rgba(0,0,0,.2)";
 	    ctx.fill();
 	    ctx.closePath();
@@ -73,7 +73,7 @@ scrumapp.views["progress"] = {
 	                startingAngle, endingAngle, false);
 	    ctx.closePath();
 
-	    ctx.fillStyle = '#fb1e60';
+	    ctx.fillStyle = scrumapp.colors.color2;
 	    ctx.fill();
 
 	},
