@@ -8,10 +8,10 @@
 
 			// if(window.location.href.indexOf("t2dsf.com") < 0){
 				//t2dsf.com is not in the domain, it's local
-				socket = io.connect('http://localhost:8020');	
+				//socket = io.connect('http://localhost:8020');	
 			// }else{
 				//we're live
-				// socket = io.connect('http://t2d-scrumpoker-app.nodejitsu.com:80');
+				socket = io.connect('http://t2dsf-scrum-poker-server.nodejitsu.com:80');
 			// }
 			// socket events for the initial connection
 			socket.on('connect', function() {
