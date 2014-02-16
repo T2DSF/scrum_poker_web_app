@@ -63,6 +63,7 @@
 				}
 			});
 			socket.on('playerDisconnect', function(playerData) {
+				console.log('playerDisconnect', playerData);
 				delete PokerServer.players[playerData.name];
 				
 				if(PokerServer.playerDisconnectCallback !== undefined) {
@@ -140,6 +141,7 @@
 				server.showHand(value);
 			},
 			updatePlayerName: function(playerName) {
+				var oldData = PokerServer.playerData;
 				delete PokerServer.players[PokerServer.playerName];
 
 				PokerServer.playerName = playerName;
@@ -168,6 +170,12 @@
 			// playerData = { name: "" }
 
 			this.playerConnectCallback = callback;
+		},
+		handlePlayerDisconnectCallback: function(callback) {
+			// callback(playerData)
+			// playerData = { name: "" }
+
+			this.playerDisconnectCallback = callback;
 		},
 		handleHandProgressCallback: function(callback) {
 			// callback(progressPercent)

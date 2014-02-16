@@ -1,40 +1,53 @@
 var ScrumPoker = {
 	pokerTables: {},
 	socket: undefined,
+	clients: {},
 	init: function(socket) {
 		console.log("init ScrumPoker");
 		ScrumPoker.socket = socket;
 	},
 	startTable: function(socket, playerData) {
-		console.log("startTable", socket, playerData);
-		var tableId = ScrumPoker.buildTable();
+		var tableId = ScrumPoker.buildTable(socket.id);
 		ScrumPoker.joinTable(socket, tableId, playerData);
 	},
 	joinTable: function(socket, tableId, playerData) {
-		console.log(ScrumPoker.pokerTables, ScrumPoker.pokerTables[tableId], tableId);
-		socket.join(tableId);
-		ScrumPoker.pokerTables[tableId].players.push(playerData);
-		socket.emit('tableConnect', tableId, ScrumPoker.pokerTables[tableId].players);
-
-		ScrumPoker.pokerTables[tableId].playerCount ++;
-		ScrumPoker.socket.in(tableId).emit('playerConnect', ScrumPoker.pokerTables[tableId].players);
+		if(ScrumPoker.pokerTables.hasOwnProperty(tableId)) {
+			socket.join(tableId);
+			ScrumPoker.pokerTables[tableId].addPlayer(socket, playerData);
+			socket.emit('tableConnect', tableId, ScrumPoker.pokerTables[tableId].players);
+			ScrumPoker.clients[socket.id] = tableId;
+			ScrumPoker.socket.in(tableId).emit('playerConnect', ScrumPoker.pokerTables[tableId].players);
+		} else {
+			socket.emit('tableError', { type: "invalidId", message: "There is no table with the ID " + tableId });
+		}
 	},
-	leaveTable: function(socket, tableId, playerData) {
+	leaveTable: function(socket) {
+		var tableId = ScrumPoker.clients[socket.id];
+		var playerData = ScrumPoker.pokerTables[tableId].removePlayer(socket);
+		console.log('-------------------------------');
+		console.log('leaveTable', tableId, playerData);
+		console.log('-------------------------------');
+		console.log('tables', ScrumPoker.pokerTables);
+		console.log('-------------------------------');
 		socket.leave(tableId);
-
-		ScrumPoker.pokerTables[tableId].playerCount --;
-		ScrumPoker.socket.in(tableId).emit('playerDisconnect', ScrumPoker.pokerTables[tableId].players[playerData.name]);
+		ScrumPoker.socket.in(tableId).emit('playerDisconnect', playerData);
 	},
 	updatePlayerData: function(socket, tableId, oldPlayerData, newPlayerData) {
-		// TODO
+		var playerData = ScrumPoker.pokerTables[tableId].removePlayer(socket);
+		ScrumPoker.pokerTables[tableId].addPlayer(socket, newPlayerData);
+		ScrumPoker.socket.in(tableId).emit('playerDataUpdate', { oldData: oldPlayerData, newData: newPlayerData });
 	},
 	startHand: function(socket, tableId) {
-		ScrumPoker.pokerTables[tableId].handData = [];
-		ScrumPoker.pokerTables[tableId].currentIssue ++;
-		ScrumPoker.pokerTables[tableId].issueProgress = 0;
-		ScrumPoker.socket.in(tableId).emit('handBegin', {
-			currentIssue: ScrumPoker.pokerTables[tableId].currentIssue
-		});
+		if(ScrumPoker.pokerTables[tableId].dealerId === socket.id) {
+			ScrumPoker.pokerTables[tableId].handData = [];
+			ScrumPoker.pokerTables[tableId].currentIssue ++;
+			ScrumPoker.pokerTables[tableId].issueProgress = 0;
+			ScrumPoker.socket.in(tableId).emit('handBegin', {
+				currentIssue: ScrumPoker.pokerTables[tableId].currentIssue
+			});
+		} else {
+			socket.emit('tableError', { type: "invalidPlayerType", message: "Nice try, only the dealer can start the hand." });
+		}
 	},
 	showHand: function(socket, tableId, name, handValue) {
 		ScrumPoker.pokerTables[tableId].issueProgress ++;
@@ -44,22 +57,26 @@ var ScrumPoker = {
 		});
 	},
 	endHand: function(socket, tableId) {
-		var average = 0,
-			count = ScrumPoker.pokerTables[tableId].handData.length;
+		if(ScrumPoker.pokerTables[tableId].dealerId === socket.id) {
+			var average = 0,
+				count = ScrumPoker.pokerTables[tableId].handData.length;
 
-		for(var i = 0; i < count; i ++) {
-			average += ScrumPoker.pokerTables[tableId].handData[i].handValue;
+			for(var i = 0; i < count; i ++) {
+				average += ScrumPoker.pokerTables[tableId].handData[i].handValue;
+			}
+			average = Math.floor(average / count);
+
+			ScrumPoker.socket.in(tableId).emit('handComplete', {
+				players: ScrumPoker.pokerTables[tableId].handData,
+				average: average
+			});
+		} else {
+			socket.emit('tableError', { type: "invalidPlayerType", message: "Nice try, only the dealer can end the hand." });
 		}
-		average = Math.floor(average / count);
-
-		ScrumPoker.socket.in(tableId).emit('handComplete', {
-			players: ScrumPoker.pokerTables[tableId].handData,
-			average: average
-		});
 	},
 
 
-	buildTable: function() {
+	buildTable: function(dealerId) {
 		var id = "";
 
 	    var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -69,25 +86,45 @@ var ScrumPoker = {
 	    }
 
 		ScrumPoker.pokerTables[id] = new Table(id);
+		ScrumPoker.pokerTables[id].dealerId = dealerId;
 		return id;
 	}
 };
 
-var Table = function(tableId) {
-	return {
-		players: [],
-		playerCount: 0,
-		tableId: tableId,
-		handData: [],
-		currentIssue: 0,
-		issueProgress: 0
-	};
+var Table = function(tableId, dealerId) {
+	this.players = [];
+	this.dealerId = dealerId;
+	this.tableId = tableId;
+	this.handData = [];
+	this.currentIssue = 0;
+	this.issueProgress = 0;
 };
 
-var Player = function(name) {
-	return {
-		name: name
-	};
+Table.prototype.addPlayer = function(socket, playerData) {
+	var player = new Player(playerData, socket.id);
+	this.players.push(player);
+	this.playerCount = this.players.length;
+};
+
+Table.prototype.removePlayer = function(socket) {
+	console.log('removing player', socket.id);
+	var playerMatch;
+	for(var i = this.players.length - 1; i >= 0; i --) {
+		if(this.players[i].socketId === socket.id) {
+			playerMatch = this.players.splice(i, 1);
+		}
+	}
+	if(playerMatch !== undefined) {
+		this.playerCount = this.players.length;
+		return playerMatch;
+	} else {
+		return undefined;
+	}
+};
+
+var Player = function(playerData, socketId) {
+	this.socketId = socketId;
+	this.name = playerData.name;
 };
 
 exports.init = ScrumPoker.init;

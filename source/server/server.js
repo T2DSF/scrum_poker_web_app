@@ -37,8 +37,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('updatePlayerInfo', function(data) {
 		ScrumPoker.updatePlayerData(socket, data.tableId, data.playerData);
 	});
-	socket.on('playerLeaving', function(data) {
-		ScrumPoker.removePlayer(socket, data.tableId, data.playerData);
+	socket.on('disconnect', function(data) {
+		ScrumPoker.leaveTable(socket);
 	});
 });
 
