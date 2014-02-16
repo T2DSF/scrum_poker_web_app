@@ -8,7 +8,8 @@ scrumapp.views["table"] = {
 	buttonCount: 9,
 	btnArr: [],
 	margin: 20,
-	btnRadius:undefined,
+	itemRadius:undefined,
+	btnRad: undefined,
 	w: 320,
 	h: 480,
 	gridW: undefined, 
@@ -20,7 +21,8 @@ scrumapp.views["table"] = {
 	
 
 	init: function(){
-		this.btnRadius = 140-(this.margin*2),
+		this.itemRadius = 140-(this.margin*2),
+		 this.btnRad = this.itemRadius/2.7;
 		this.setStatus();
 		// console.log("table.init() called");
 		this.initEvents();
@@ -28,8 +30,9 @@ scrumapp.views["table"] = {
 		this.initTimer();
 	},
 	initEvents: function(){
-		window.addEventListener("touchstart", $.proxy(this.doTouchStart, this), false);
-		window.addEventListener("mousedown", $.proxy(this.doTouchStart, this), false);
+		$(window).bind('mousedown touchbegin', $.proxy(this.handleClick, this));
+		//window.addEventListener("touchstart", $.proxy(this.doTouchStart, this), false);
+		//window.addEventListener("mousedown", $.proxy(this.doTouchStart, this), false);
 	},
 	initCanvas: function(){	
 		this.c = document.getElementById('tablecanvas');
@@ -45,40 +48,41 @@ scrumapp.views["table"] = {
 	setStatus: function(){
 		$('footer div#status').text("select level of effort");
 	},
-	pressedCheck: function(e){
-		// console.log(e.pageX+" "+e.clientX);
+	// callback when the dealer starts a new hand
+	handleHandBegin: function(issueNumber) {
+		console.log("hand begin", issueNumber);
+		scrumapp.setView("table");
+	},
+	pressedCheck: function(event){
+		// console.log("pressedCheck()");
 		var obj; 
 		var rect = this.c.getBoundingClientRect();
-		var clickPt = {x:e.clientX - rect.left, y:e.clientY - rect.top};
-		// console.log(bbb.x+" <> "+bbb.y);
-		// console.log(this.xOffset+" "+this.btnRadius+" "+e.clientX);
-		// var clickPt = {x:e.pageX-this.xOffset-(this.btnRadius*2), y:e.pageY};
+		var eClickXY = this.getXYFromEvent(event);
+		var clickPt = {x:eClickXY.x - rect.left, y:eClickXY.y - rect.top};
+		// console.log(clickPt.x+" "+clickPt.y+" rectleft: "+rect.left+" recttop: "+rect.top);
+		// var clickPt = {x:e.pageX-this.xOffset-(this.itemRadius*2), y:e.pageY};
 		var dist;
 		// this.test = {x: e.pageX-this.xOffset, y:e.pageY};
 		for (var i = 0; i < this.btnArr.length; i++) {
 			obj = this.btnArr[i];
 
 			dist = this.checkDist(obj, clickPt);
-			//console.log(clickPt.y+" "+obj.y);
-			// console.log(i+": "+dist+"  "+this.btnRadius);
-			if(dist < this.btnRadius/3){
-				//hit
+			if(dist < this.btnRad){
 				obj.isClicked = true;
 				var score = this.fibNums[obj.i];
-				this.handleScoreSelect(score);
-
-				// console.log('click '+this.fibNums[obj.i]);
+				scrumapp.curScore = score;
+				this.handleScoreSelected(score);
 			}else{
 				obj.isClicked = false;
 			}
 		}
 	},
-	handleScoreSelect: function(value) {
+	handleScoreSelected: function(value) {
 		// console.log('you selected', value);
 		PokerServer.player.showHand(value);
 		scrumapp.setView("progress");
 	},
-	doTouchStart: function(e){
+	handleClick: function(e){
 		//console.log("pressed");
 		e.preventDefault();	
 		this.pressedCheck(e);
@@ -96,14 +100,14 @@ scrumapp.views["table"] = {
 	initGrid: function(){
 		// console.log("initGrid()");
 		var gridCount = this.gridCount, 
-		btnRadius = this.btnRadius, 
+		itemRadius = this.itemRadius, 
 		buttonCount = this.buttonCount,
 		headerSize = this.headerSize,
 		w = this.w, 
 		h = this.h;
 		//
-		this.gridW = ((buttonCount-1)%gridCount)*btnRadius;
-		this.gridH = Math.floor((buttonCount-1)/gridCount)*btnRadius;
+		this.gridW = ((buttonCount-1)%gridCount)*itemRadius;
+		this.gridH = Math.floor((buttonCount-1)/gridCount)*itemRadius;
 		this.xOffset = w/2-(this.gridW/2);
 		// console.log(this.xOffset);
 		this.yOffset = h/2-(this.gridH/2) + headerSize;
@@ -112,8 +116,8 @@ scrumapp.views["table"] = {
 				i:i,
 				isClicked: false
 			};
-			obj.x = (i%gridCount)*btnRadius+ this.xOffset;
-			obj.y = Math.floor(i/gridCount)* btnRadius + this.yOffset;
+			obj.x = (i%gridCount)*itemRadius+ this.xOffset;
+			obj.y = Math.floor(i/gridCount)* itemRadius + this.yOffset;
 			this.btnArr.push(obj);
 		}
 	},
@@ -126,7 +130,7 @@ scrumapp.views["table"] = {
 		for (var i = 0; i < this.btnArr.length; i++) {
 			var obj = this.btnArr[i];
 			ctx.beginPath();
-			ctx.arc(obj.x, obj.y, this.btnRadius/3, 0, Math.PI*2);
+			ctx.arc(obj.x, obj.y, this.btnRad, 0, Math.PI*2);
 			
 			if(obj.isClicked){
 				ctx.fillStyle = '#fb1e60';	
@@ -152,6 +156,20 @@ scrumapp.views["table"] = {
 		// ctx.fill();
 		
 
+	},
+	getXYFromEvent: function(event) {
+		// console.log(event);
+		var x, y;
+		if(event.originalEvent.hasOwnProperty('changedTouches')) {
+			x = event.originalEvent.changedTouches[0].pageX;
+			y = event.originalEvent.changedTouches[0].pageY;
+		} else {
+			x = event.originalEvent.pageX;
+			y = event.originalEvent.pageY;
+		}
+
+		return { x: x, y: y };
 	}
+
 }
 

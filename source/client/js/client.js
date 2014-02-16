@@ -6,9 +6,11 @@
 		connect: function() {
 			var self = this;
 
-			socket = io.connect('http://localhost:8020');
-			// socket = io.connect('http://t2d-scrumpoker-app.nodejitsu.com:80');
-
+			// if(window.location.href.indexOf("localhost")>=0){
+				socket = io.connect('http://localhost:8020');	
+			// }else{
+				// socket = io.connect('http://t2d-scrumpoker-app.nodejitsu.com:80');
+			// }
 			// socket events for the initial connection
 			socket.on('connect', function() {
 				if(PokerServer.clientType === "dealer") {
@@ -103,7 +105,7 @@
 
 		// the completeCallback will return any currently connected players
 
-		startPokerTable: function(playerName, completeCallback) {
+		createNewPokerTable: function(playerName, completeCallback) {
 			this.connectCallback = completeCallback;
 			this.clientType = "dealer";
 			this.playerName = playerName;
@@ -135,7 +137,7 @@
 			showHand: function(value) {
 				server.showHand(value);
 			},
-			updtePlayerName: function(playerName) {
+			updatePlayerName: function(playerName) {
 				delete PokerServer.players[PokerServer.playerName];
 
 				PokerServer.playerName = playerName;

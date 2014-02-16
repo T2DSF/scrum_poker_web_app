@@ -1,5 +1,7 @@
 scrumapp.views["limbo"] = {
-	
+	tId: undefined,
+	currentNumberOfPlayers: 0,
+	//
 	init: function(){
 		this.setStatus();
 
@@ -17,8 +19,17 @@ scrumapp.views["limbo"] = {
 	handleHandBegin: function(issueNumber) {
 		console.log("hand begin", issueNumber);
 	},
+	updatePlayerCount: function(n){
+		this.currentNumberOfPlayers = n;
+		this.showId();
+	},
 	showId: function(tableId){
-		$('#tableId').text("table: "+ tableId);
+		if(tableId){
+			this.tId = tableId;
+		}else{
+
+		}
+		$('#tableId').text("ID: "+ this.tId+" ppl: "+this.currentNumberOfPlayers);
 	}
 }
 

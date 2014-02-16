@@ -8,7 +8,7 @@
 
 
 body{
-	background-color: #000;
+	background-color: #111;
 	margin: 0px;
 	padding: 0px;
 	overflow: auto;
@@ -119,6 +119,14 @@ footer .navItem{
 	margin: 14px;
 	float: left;
 	cursor: pointer;	
+}
+
+#restartHand{
+	position: absolute;
+}
+
+.hidden{
+	display: none;
 }
 
 footer .navItem:hover{

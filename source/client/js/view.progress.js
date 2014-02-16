@@ -10,7 +10,7 @@ scrumapp.views["progress"] = {
 		this.setStatus();
 		// console.log("table.init() called");
 		this.initCanvas();
-		this.initTimer();
+		//this.initTimer();
 	},
 	initCanvas: function(){	
 		this.c = document.getElementById('waitingcanvas');
@@ -28,8 +28,27 @@ scrumapp.views["progress"] = {
 	setStatus: function(){
 		$('footer div#status').text("hurry up you guys...");
 	},
-	draw: function(){
-		var segmentSize = 360/7;
+	// callback when a player makes a selection
+	handleHandProgress: function(percent) {
+		console.log("hand progress", percent);
+		var me = scrumapp.views["progress"];
+		var p = percent.issueProgress;
+		me.draw(p);
+		if(p>=1){
+			me.endHand();
+		}
+	},
+	// callback when the dealer ends the hand
+	handleHandComplete: function(handData) {
+		// console.log("hand end", handData);
+		scrumapp.setView("results");
+		scrumapp.views["results"].drawResults(handData);
+	},
+	draw: function(percent){
+		var pct = percent;
+		var arcSpan = (360*pct);
+		var startingAngle = this.degreesToRadians(270);
+    	
 		var ctx = this.ctx;
 		var canvas = this.c;
 
@@ -37,20 +56,20 @@ scrumapp.views["progress"] = {
     	var centerY = Math.floor(canvas.height / 2)-50;
     	var radius = Math.floor(canvas.width / 2)*.8;
 
-	    var startingAngle = 270;
-    	var arcSize = this.degreesToRadians(segmentSize*2);
-    	var endingAngle = startingAngle + arcSize;
+	    var arcSpanRadians = this.degreesToRadians(arcSpan);
+    	var endingAngle = startingAngle + arcSpanRadians;
     	ctx.clearRect(0,0,canvas.width, canvas.height);
 	    ctx.beginPath();
 	    
 	    ctx.arc(centerX, centerY, radius, 0, Math.PI*2);
-	    ctx.fillStyle = "#ccc";
+	    ctx.fillStyle = "#494949";
+	    // ctx.fillStyle = "rgba(0,0,0,.2)";
 	    ctx.fill();
 	    ctx.closePath();
 
 	    ctx.beginPath();
 	    ctx.moveTo(centerX, centerY);
-	    ctx.arc(centerX, centerY, radius, 
+	    ctx.arc(centerX, centerY, radius*.9, 
 	                startingAngle, endingAngle, false);
 	    ctx.closePath();
 
