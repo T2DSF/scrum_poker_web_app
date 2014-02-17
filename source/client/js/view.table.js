@@ -35,8 +35,7 @@ scrumapp.views["table"] = {
 	},
 	initEvents: function(){
 		$(window).bind('mousedown touchstart', $.proxy(this.handleClick, this));
-		//window.addEventListener("touchstart", $.proxy(this.doTouchStart, this), false);
-		//window.addEventListener("mousedown", $.proxy(this.doTouchStart, this), false);
+		
 	},
 	initCanvas: function(){	
 		this.c = document.getElementById('tablecanvas');
@@ -88,7 +87,7 @@ scrumapp.views["table"] = {
 		scrumapp.setView("progress");
 	},
 	handleClick: function(e){
-		//console.log("pressed");
+		console.log("pressed");
 		e.preventDefault();	
 		this.pressedCheck(e);	
 		

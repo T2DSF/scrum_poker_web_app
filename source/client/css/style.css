@@ -36,8 +36,11 @@ header{
 
 canvas {
 	width: 320px;
-	left:; 50%;
-	margin-left: 160px;
+	height:568px;
+	left: 50%;
+	margin-left: -160px;
+	position: absolute;
+	pointer-events: none;
 }
 
 h2{

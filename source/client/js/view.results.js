@@ -6,12 +6,15 @@ scrumapp.views["results"] = {
 	
 
 	init: function(){
+		// var $('#restartHand') = $('#restartHand');
 		$('#restartHand').bind('click', $.proxy(this.restartHand, this));
 		this.setStatus();
 		if(PokerServer.clientType == "dealer"){
-			$("#restartHand").removeClass('hidden');
+			if($('#restartHand').hasClass('hidden')){
+				$('#restartHand').removeClass('hidden');
+			}
 		}else{
-			$("#restartHand").addClass('hidden');
+			$('#restartHand').addClass('hidden');
 		}
 		// console.log("table.init() called");
 		this.initCanvas();
@@ -28,6 +31,7 @@ scrumapp.views["results"] = {
         // this.draw();
 	},
 	restartHand: function(e){
+		console.log("results.restartHand called");
 		//scrumapp.setView("table");
 		PokerServer.dealer.startHand();
 	},
@@ -199,6 +203,7 @@ scrumapp.views["results"] = {
 		ctx.fillText(t.msg, t.x, t.y);
 	},
 	sortData: function(data){
+
 		var obj = {};
 		var sum = 0;
 		var items = 0;
@@ -207,19 +212,22 @@ scrumapp.views["results"] = {
 		for (var i = 0; i < data.length; i++) {
 			sum = sum+Number(data[i].handValue);
 			items++;
+			// console.log("  ");
+			// console.log("******sorting: "+i+": "+data[i].name+" "+data[i].handValue);
+			var newObj = data[i];
 			if(i==0){
-				lowest = data[i];
-				highest = data[i];
+				lowest = newObj;
+				highest = newObj;
 			}else{
-				if(lowest.handValue > data[i].handValue){
-					lowest = data[i];
-				}else if(highest.handValue<data[i].handValue){
-					highest = data[i];
+				if(newObj.handValue < lowest.handValue){
+					lowest = newObj;
+				}else if(newObj.handValue > highest.handValue){
+					highest = newObj;
 				}
 			}
 
 		}
-		console.log(sum+" "+items);
+		// console.log(sum+" "+items);
 		var ave = sum/items;
 		obj.totalVotes = items;
 		obj.highest = highest;

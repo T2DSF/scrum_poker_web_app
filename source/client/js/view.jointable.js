@@ -24,7 +24,7 @@ scrumapp.views["jointable"] = {
 	},
 	// join table button handler
 	handleJoinTableClick: function(e) {
-		console.log("handleJoinTableClick();");
+		// console.log("handleJoinTableClick();");
 		var name = scrumapp.ls.get_local_storage_name();
 		var tableId = $('#tableIdInput').val().toUpperCase();
 		PokerServer.joinPokerTable(tableId, name, this.handleTableConnect);
@@ -33,7 +33,7 @@ scrumapp.views["jointable"] = {
 	//
 	//
 	handleTableConnect: function(data) {
-		console.log("handleTableConnect", PokerServer.tableId, data, +"  "+PokerServer.clientType);
+		// console.log("handleTableConnect", PokerServer.tableId, data, +"  "+PokerServer.clientType);
 
 		scrumapp.setView("limbo");
 		scrumapp.views["limbo"].showId(PokerServer.tableId);
@@ -51,11 +51,9 @@ scrumapp.views["jointable"] = {
 		for (var i = 0; i < playerData.length; i++) {
 			console.log('player '+i+": "+playerData[i].name);	
 		}
-		console.log("passing this: "+ playerData.length);
+		// console.log("passing this: "+ playerData.length);
 		scrumapp.views["limbo"].updatePlayerCount(playerData.length);
 
-		console.log("new player's clientType: "+PokerServer.clientType);
-	
 	},
 	//used for testing, disable before release
 	setClearBtn: function(){

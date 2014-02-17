@@ -43,7 +43,7 @@ var scrumapp = {
 		}
 	},
 	setView: function(screenName){
-		console.log("***** setView: "+screenName);
+		// console.log("***** setView: "+screenName);
 		var $activeScreen = $("#container .active")[0];
 	    if ($activeScreen) {
 	        $("div.active").toggleClass("active");

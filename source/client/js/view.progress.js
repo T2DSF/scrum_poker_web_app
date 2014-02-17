@@ -30,7 +30,7 @@ scrumapp.views["progress"] = {
 	},
 	// callback when a player makes a selection
 	handleHandProgress: function(percent) {
-		console.log("hand progress", percent);
+		// console.log("hand progress", percent);
 		var me = scrumapp.views["progress"];
 		var p = percent.issueProgress;
 		me.draw(p);
