@@ -27,6 +27,7 @@ var scrumapp = {
 		PokerServer.handleHandBeginCallback(tableView.handleHandBegin);
 		PokerServer.handleHandProgressCallback(progressView.handleHandProgress);
 		PokerServer.handleHandCompleteCallback(progressView.handleHandComplete);
+		PokerServer.handleTableErrorCallback(this.handleTableErrorCallback);
 		//
 	},
 	prevent: function(e){
@@ -35,11 +36,12 @@ var scrumapp = {
 	},
 	initScreen: function(){
 
-		// console.log("initScreen");
+		console.log("initScreen");
 		if( !this.ls.get_local_storage_name() ){
 			this.setView("setup");
 		}else{
-			this.setView("jointable")
+			this.setView("jointable");
+			$('#secretCode').addClass('transp');
 		}
 	},
 	setView: function(screenName){
@@ -58,6 +60,15 @@ var scrumapp = {
 	},
 	handleClick: function(e){
 		e.preventDefault();
+	},
+	handleTableErrorCallback: function(e){
+		console.log("*   *error: "+ e);
+		for(var p in e){
+			console.log(p+ " "+ e[p]);
+		}
+		if(e.type == "invalidId"){
+			$('footer div#status').text("that id doesn't exist!");
+		}
 	}
 	
 

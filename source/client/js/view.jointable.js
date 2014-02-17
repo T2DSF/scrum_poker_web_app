@@ -25,9 +25,19 @@ scrumapp.views["jointable"] = {
 	// join table button handler
 	handleJoinTableClick: function(e) {
 		// console.log("handleJoinTableClick();");
-		var name = scrumapp.ls.get_local_storage_name();
-		var tableId = $('#tableIdInput').val().toUpperCase();
-		PokerServer.joinPokerTable(tableId, name, this.handleTableConnect);
+		if($('#secretCode').hasClass('transp')){
+			$('#secretCode').toggleClass('transp');
+			$('#newTableBtn').toggleClass('transp');
+			$('#newTableBtn').unbind('mousedown touchstart', $.proxy(this.handleNewTableClick, this));
+			// $('#secretCode').addClass('notransp');
+		}else{
+			var name = scrumapp.ls.get_local_storage_name();
+			var tableId = $('#tableIdInput').val().toUpperCase();
+			if(tableId != ""){
+				// console.log("PokerServer.connected: "+PokerServer.connected);
+				PokerServer.joinPokerTable(tableId, name, this.handleTableConnect);
+			}
+		}
 	},
 	//
 	//

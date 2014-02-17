@@ -37,6 +37,9 @@ scrumapp.views["progress"] = {
 	setStatus: function(){
 		$('footer div#status').text("hurry up you guys...");
 	},
+	restart:function(){
+		this.draw(0);
+	},
 	// callback when a player makes a selection
 	handleHandProgress: function(percent) {
 		// console.log("hand progress", percent);
@@ -60,7 +63,9 @@ scrumapp.views["progress"] = {
     	
 		var ctx = this.ctx;
 		var canvas = this.c;
-
+		if(!canvas){
+			return false;
+		}
 		var centerX = Math.floor(canvas.width / 2);
     	var centerY = Math.floor(canvas.height / 2)-50;
     	var radius = Math.floor(canvas.width / 2)*.8;

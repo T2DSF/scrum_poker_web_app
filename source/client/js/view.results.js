@@ -31,7 +31,7 @@ scrumapp.views["results"] = {
         // this.draw();
 	},
 	restartHand: function(e){
-		console.log("results.restartHand called");
+		// console.log("results.restartHand called");
 		//scrumapp.setView("table");
 		PokerServer.dealer.startHand();
 	},
@@ -213,27 +213,24 @@ scrumapp.views["results"] = {
 		for (var i = 0; i < data.length; i++) {
 			sum = sum+Number(data[i].handValue);
 			items++;
-			console.log("  ");
-			console.log("******sorting: "+i+": "+data[i].name+", score of: "+data[i].handValue);
 			var newObj = data[i];
 			if(i==0){
 				lowest.score = newObj.handValue;
 				lowest.name = newObj.name;
 				highest.score = Number(newObj.handValue);
 				highest.name = newObj.name;
-				console.log("first one, starting off at lowest: "+lowest.name+" w a score of "+ lowest.score);
-				console.log("also, starting off highest: "+highest.name+" w a score of"+ highest.score);
 				
 			}else{
 				if(newObj.handValue < lowest.score){
-					console.log("this iteration is smaller than currentl lowest.score, new num is: "+newObj.handValue+" vs currentlow at: "+lowest.score);
-					lowest.score = Number(newObj.handValue);
-					lowest.name = newObj.name;
-				}else if(newObj.handValue > highest.score){
-					console.log("this iteration is LARGER than currentl highest.score, new num is: "+newObj.handValue+" vs currenthigh at: "+highest.score);
-					
-					highest.score = Number(newObj.handValue);
-					highest.name = newObj.name;
+					lowest = {
+						score: Number(newObj.handValue),
+						name: newObj.name
+					}
+				}else if(newObj.handValue > highest.score){		
+					highest = {
+						score: Number(newObj.handValue),
+						name: newObj.name
+					}
 				}
 			}
 
@@ -244,7 +241,8 @@ scrumapp.views["results"] = {
 		obj.highest = highest;
 		obj.lowest = lowest;
 		//to keep one decimal place
-		ave = Math.round(ave * 100) / 100;
+		ave = Math.round(ave * 10) / 10;
+		// ave = Math.round(ave * 100) / 100;
 		// ave = Math.round(ave);
 		obj.average = ave;
 		return obj;

@@ -15,6 +15,7 @@
 			}
 			// socket events for the initial connection
 			socket.on('connect', function() {
+				PokerServer.connected = true;
 				if(PokerServer.clientType === "dealer") {
 					socket.emit('startTable', { playerData: PokerServer.playerData });
 				} else if(PokerServer.clientType === "player") {
@@ -70,6 +71,11 @@
 					PokerServer.playerDisconnectCallback(playerData);
 				}
 			});
+			socket.on('tableError', function(handData) {
+				if(PokerServer.tableErrorCallback !== undefined) {
+					PokerServer.tableErrorCallback(handData);
+				}
+			});
 		},
 		startHand: function() {
 			socket.emit('startHand', { tableId: PokerServer.tableId });
@@ -98,15 +104,18 @@
 		handBeginCallback: undefined,
 		playerInfoUpdateCallback: undefined,
 		playerConnectCallback: undefined,
-
+		tableErrorCallback: undefined,
+		
 		playerData: undefined,
 		players: {},
 		
+
+		connected: false,
 		// API to start server connection depending on client role
 		// completeCallback(playerData)
 		// playerData = { players: [ { name: "" }, ... ] }
 
-		// the completeCallback will return any currently connected players
+		// the completeCallback will return any currently connected: false, players
 
 		createNewPokerTable: function(playerName, completeCallback) {
 			this.connectCallback = completeCallback;
@@ -121,7 +130,11 @@
 			this.playerName = playerName;
 			this.playerData = { name: playerName };
 			this.tableId = tableId;
-			server.connect();
+			if(!this.connected){
+				server.connect();
+			}else{
+				socket.emit('joinTable', { tableId: PokerServer.tableId, playerData: PokerServer.playerData });
+			}
 		},
 		leaveTable: function() {
 			server.leaveTable(this.playerData);
@@ -196,6 +209,12 @@
 			// currentIssue = #
 
 			this.handBeginCallback = callback;
+		},
+		handleTableErrorCallback: function(callback) {
+			// callback(currentIssue)
+			// currentIssue = #
+
+			this.tableErrorCallback = callback;
 		}
 	};
 
