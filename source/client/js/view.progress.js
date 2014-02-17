@@ -8,6 +8,15 @@ scrumapp.views["progress"] = {
 	init: function(){
 		$('#endHand').bind('click', $.proxy(this.endHand, this));
 		this.setStatus();
+
+		if(PokerServer.clientType == "dealer"){
+			if($('#endHand').hasClass('hidden')){
+				$('#endHand').removeClass('hidden');
+			}
+		}else{
+			$('#endHand').addClass('hidden');
+		}
+
 		// console.log("table.init() called");
 		this.initCanvas();
 		//this.initTimer();

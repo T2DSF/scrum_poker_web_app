@@ -16,7 +16,7 @@ body{
 }
 
 header{
-	height: 55px;
+	height: 10%;
 	background-color: #00afea;
 	background-image: url('../img/logo.png');
 	background-repeat: no-repeat;
@@ -171,16 +171,23 @@ footer #status{
 }
 
 #container{
-	
-	/*width:320px;*/
+	position: absolute;
+	left: 0%;
+	right:0%;
+	top: 0%;
+	bottom: 0%;
+	min-height: 480px;
+	min-width: 300px;
+
+	/*
 	height: 568px;
 	margin-top: 0px;
 	margin-bottom: 0px;
 	margin-left: auto;
 	margin-right: auto;
-
+*/
 	background-color: #231f20;
-	position: relative;
+	/*position: relative;*/
 	color: #fff;
 
 }

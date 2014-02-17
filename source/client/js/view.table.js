@@ -69,7 +69,15 @@ scrumapp.views["table"] = {
 		for (var i = 0; i < this.btnArr.length; i++) {
 			obj = this.btnArr[i];
 
-			dist = this.checkDist(obj, clickPt);
+		dist = this.checkDist(obj, clickPt);
+/*				var ctx = this.ctx;
+			 ctx.beginPath();
+			ctx.arc(obj.x, obj.y, this.btnRad, 0, Math.PI*2);
+			ctx.fillStyle = '#f00';
+			ctx.fill();
+*/
+
+
 			if(dist < this.btnRad){
 				obj.isClicked = true;
 				var score = this.fibNums[obj.i];

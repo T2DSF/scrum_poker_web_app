@@ -77,16 +77,17 @@ scrumapp.views["results"] = {
 	    this.drawText(ctx, textObj1);
 
 	    var textObj2 = {
-	    	font:  142+'pt '+'universcondensed',
+	    	//large pink number at top
+	    
+	    	font:  122+'pt '+'universcondensed',
 	    	textAlign: alignDefault,
 	    	x: canvas.width/2,
-	    	y: 220,
+	    	y: 210,
 	    	msg: average,
 	    	fillStyle: scrumapp.colors.color2
 	    		
 	    };
 	    this.drawText(ctx, textObj2);
-
 	    var textObj3 = {
 	    	font:  titleSize,
 	    	textAlign: alignDefault,
@@ -147,7 +148,7 @@ scrumapp.views["results"] = {
 	    	textAlign: alignDefault,
 	    	x: 84,
 	    	y: 430,
-	    	msg: data.highest.name+": "+data.highest.handValue,
+	    	msg: data.highest.name+": "+data.highest.score,
 	    	fillStyle: scrumapp.colors.color1
 	    		
 	    };
@@ -169,7 +170,7 @@ scrumapp.views["results"] = {
 	    	textAlign: alignDefault,
 	    	x: 234,
 	    	y: 430,
-	    	msg: data.lowest.name+": "+data.lowest.handValue,
+	    	msg: data.lowest.name+": "+data.lowest.score,
 	    	fillStyle: scrumapp.colors.color1
 	    		
 	    };
@@ -207,22 +208,32 @@ scrumapp.views["results"] = {
 		var obj = {};
 		var sum = 0;
 		var items = 0;
-		var lowest;
-		var highest;
+		var lowest = {};
+		var highest = {};
 		for (var i = 0; i < data.length; i++) {
 			sum = sum+Number(data[i].handValue);
 			items++;
-			// console.log("  ");
-			// console.log("******sorting: "+i+": "+data[i].name+" "+data[i].handValue);
+			console.log("  ");
+			console.log("******sorting: "+i+": "+data[i].name+", score of: "+data[i].handValue);
 			var newObj = data[i];
 			if(i==0){
-				lowest = newObj;
-				highest = newObj;
+				lowest.score = newObj.handValue;
+				lowest.name = newObj.name;
+				highest.score = Number(newObj.handValue);
+				highest.name = newObj.name;
+				console.log("first one, starting off at lowest: "+lowest.name+" w a score of "+ lowest.score);
+				console.log("also, starting off highest: "+highest.name+" w a score of"+ highest.score);
+				
 			}else{
-				if(newObj.handValue < lowest.handValue){
-					lowest = newObj;
-				}else if(newObj.handValue > highest.handValue){
-					highest = newObj;
+				if(newObj.handValue < lowest.score){
+					console.log("this iteration is smaller than currentl lowest.score, new num is: "+newObj.handValue+" vs currentlow at: "+lowest.score);
+					lowest.score = Number(newObj.handValue);
+					lowest.name = newObj.name;
+				}else if(newObj.handValue > highest.score){
+					console.log("this iteration is LARGER than currentl highest.score, new num is: "+newObj.handValue+" vs currenthigh at: "+highest.score);
+					
+					highest.score = Number(newObj.handValue);
+					highest.name = newObj.name;
 				}
 			}
 
