@@ -22,15 +22,12 @@ var ScrumPoker = {
 		}
 	},
 	leaveTable: function(socket) {
-		var tableId = ScrumPoker.clients[socket.id];
-		var playerData = ScrumPoker.pokerTables[tableId].removePlayer(socket);
-		console.log('-------------------------------');
-		console.log('leaveTable', tableId, playerData);
-		console.log('-------------------------------');
-		console.log('tables', ScrumPoker.pokerTables);
-		console.log('-------------------------------');
-		socket.leave(tableId);
-		ScrumPoker.socket.in(tableId).emit('playerDisconnect', playerData);
+		if(ScrumPoker.clients.hasOwnProperty(socket.id)) {
+			var tableId = ScrumPoker.clients[socket.id];
+			var playerData = ScrumPoker.pokerTables[tableId].removePlayer(socket);
+			socket.leave(tableId);
+			ScrumPoker.socket.in(tableId).emit('playerDisconnect', playerData);
+		}
 	},
 	updatePlayerData: function(socket, tableId, oldPlayerData, newPlayerData) {
 		var playerData = ScrumPoker.pokerTables[tableId].removePlayer(socket);
@@ -79,7 +76,7 @@ var ScrumPoker = {
 	buildTable: function(dealerId) {
 		var id = "";
 
-	    var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	    var charset = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 
 	    for( var i=0; i < 4; i++ ) {
 	        id += charset.charAt(Math.floor(Math.random() * charset.length));
