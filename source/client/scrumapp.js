@@ -12,9 +12,11 @@ var scrumapp = {
 	//initScreen(),
 
 	init: function(){
-		if(this.checkIfStandalone){
+		if(this.checkifPopupNeeded){
+			this.popup();
 			console.log("this is not standalone");			
 		}else{
+			// this.popup();
 			console.log("this is in the standalone");
 		}
 		console.log(window.navigator.platform);
@@ -37,10 +39,12 @@ var scrumapp = {
 		PokerServer.handleTableErrorCallback(this.handleTableErrorCallback);
 		//
 	},
-	checkIfStandalone:function(){
+	checkifPopupNeeded:function(){
 		if (("standalone" in window.navigator) && !window.navigator.standalone){
+			//standalone property exists, standalone not set
 			return true;
 		}else{
+			//either standalone isnt possible or standalone is set
 			return false;
 		}
 
@@ -88,6 +92,10 @@ var scrumapp = {
 	resized: function(event){
 		console.log("ersize");
 		scrumapp.views["progress"].initCanvas();
+	},
+	popup:function(){
+		$('#container header').after("<div class='popup' id='installPopup'></div>")
+		// $('#container header').after("<div class='popup' id='installPopup'><h2>Please install this to your phone's homescreen.</h2></div>")
 	}
 	
 

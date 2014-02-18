@@ -197,7 +197,31 @@ footer #status{
 	padding-top: 17px;
 }
 
+.popup{
+	position:absolute;
+	background-color: white;
+	top:20%;
+	left:10%;
+	right:10%;
+	bottom:20%;
+	z-index: 100;
+	border: 1px solid white;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
 
+.popup h2{
+	top: 0;
+}
+
+#installPopup{
+	background-image: url('../img/homescreen.png');
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
 
 
 
