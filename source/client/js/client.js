@@ -71,9 +71,9 @@
 					PokerServer.playerDisconnectCallback(playerData);
 				}
 			});
-			socket.on('tableError', function(handData) {
+			socket.on('tableError', function(error) {
 				if(PokerServer.tableErrorCallback !== undefined) {
-					PokerServer.tableErrorCallback(handData);
+					PokerServer.tableErrorCallback(error);
 				}
 			});
 		},

@@ -12,6 +12,12 @@ var scrumapp = {
 	//initScreen(),
 
 	init: function(){
+		if(this.checkIfStandalone){
+			console.log("this is not standalone");			
+		}else{
+			console.log("this is in the standalone");
+		}
+		console.log(window.navigator.platform);
 		this.initScreen();
 		var joinView = scrumapp.views["jointable"];
 		var limboView = scrumapp.views["limbo"];
@@ -22,6 +28,7 @@ var scrumapp = {
 		//$('#newTableBtn').bind('mousedown touchstart', $.proxy(this.handleNewTableClick, this));
 		$('#container').bind('touchmove', $.proxy(this.prevent, this));
 		//
+		$(window).bind('resize', $.proxy(this.resized, this));
 		// after we connect to the table, register callbacks for all the server events
 		PokerServer.handlePlayerConnectCallback(joinView.handlePlayerConnect);
 		PokerServer.handleHandBeginCallback(tableView.handleHandBegin);
@@ -29,6 +36,14 @@ var scrumapp = {
 		PokerServer.handleHandCompleteCallback(progressView.handleHandComplete);
 		PokerServer.handleTableErrorCallback(this.handleTableErrorCallback);
 		//
+	},
+	checkIfStandalone:function(){
+		if (("standalone" in window.navigator) && !window.navigator.standalone){
+			return true;
+		}else{
+			return false;
+		}
+
 	},
 	prevent: function(e){
 		e.preventDefault();
@@ -69,6 +84,10 @@ var scrumapp = {
 		if(e.type == "invalidId"){
 			$('footer div#status').text("that id doesn't exist!");
 		}
+	},
+	resized: function(event){
+		console.log("ersize");
+		scrumapp.views["progress"].initCanvas();
 	}
 	
 

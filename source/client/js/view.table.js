@@ -35,6 +35,7 @@ scrumapp.views["table"] = {
 	},
 	initEvents: function(){
 		$(window).bind('mousedown touchstart', $.proxy(this.handleClick, this));
+		$(window).bind('mousemove', $.proxy(this.handleMouseMove, this));
 		
 	},
 	initCanvas: function(){	
@@ -57,7 +58,8 @@ scrumapp.views["table"] = {
 		scrumapp.setView("table");
 	},
 	pressedCheck: function(event){
-		// console.log("pressedCheck()");
+		// console.log("pressedCheck() "+event.type);
+		
 		var obj; 
 		var rect = this.c.getBoundingClientRect();
 		var eClickXY = this.getXYFromEvent(event);
@@ -80,9 +82,11 @@ scrumapp.views["table"] = {
 
 			if(dist < this.btnRad){
 				obj.isClicked = true;
-				var score = this.fibNums[obj.i];
-				scrumapp.curScore = score;
-				this.handleScoreSelected(score);
+				if(event.type == "mousedown"){
+					var score = this.fibNums[obj.i];
+					scrumapp.curScore = score;
+					this.handleScoreSelected(score);
+				}
 			}else{
 				obj.isClicked = false;
 			}
@@ -93,6 +97,10 @@ scrumapp.views["table"] = {
 		$(window).unbind('mousedown touchstart', $.proxy(this.handleClick, this));
 		PokerServer.player.showHand(value);
 		scrumapp.setView("progress");
+	},
+	handleMouseMove:function(event){
+		event.preventDefault();	
+		this.pressedCheck(event);
 	},
 	handleClick: function(e){
 		console.log("pressed");
