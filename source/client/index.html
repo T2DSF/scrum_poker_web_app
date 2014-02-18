@@ -6,12 +6,17 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<link rel="apple-touch-icon" href="img/touch_icon.png">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/appicon/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/appicon/apple-touch-icon-15220x152.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/appicon/apple-touch-icon-76x76.png">
 		
 		<title>Scrum Poker - Sony</title>
 		
 		<!-- <link type="text/css" href="css/normalize.css" rel="stylesheet" /> -->
 		<link href="css/style.css" rel="stylesheet" />
+		<!--  -->
 	 	<script src="js/libs/jquery-1.6.2.min.js"></script>
 		<script src="scrumapp.js"></script>
 		<script src="js/view.setup.js"></script>
@@ -31,33 +36,22 @@
 		<div id="container">
 			<header></header>
 			<div class="screen" id="setup">
-				<div class="contact_form" name="contact_form">
-					<ul>
-						<li>
-  							<h2>your name:</h2>
-    					</li>
-						<li>
-      						<input type="text" id="playerNameInput" placeholder="name here" maxlength="7"/>
-						</li>
-					</ul>
+				<div class="contact_form">
+					<h2>your name:</h2>
+					<input type="text" id="playerNameInput" placeholder="name here" maxlength="7"/>
+					<button id="submitName" class="submit">set name</button>
 				</div>
-				<button id="submitName" class="submit">set name</button>
 			</div>
 			<div class="screen" id="jointable">
-				<div class="contact_form" name="contact_form">
+				<div class="contact_form">
 					<div id="secretCode">
-						<ul>
-							<li>
-	  							<h2>enter secret code:</h2>
-	    					</li>
-							<li>
-	    						<input type="text" placeholder="secret code" id="tableIdInput" maxlength="5"/>
-							</li>
-						</ul>
+						<div id="input">
+							<h2>enter secret code:</h2>
+	    					<input type="text" placeholder="secret code" id="tableIdInput" maxlength="5"/>
+	    				</div>
+	    				<button class="submit" id="submitCodeBtn">Join</button>
 					</div>
 				</div>
-				<button class="submit" id="submitCodeBtn">Join</button>
-				<p> </p>
 				<button class="submit" id="newTableBtn">new table</button>
 			</div>
 			<div class="screen" id="limbo">

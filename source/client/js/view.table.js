@@ -131,7 +131,7 @@ scrumapp.views["table"] = {
 		this.gridH = Math.floor((buttonCount-1)/gridCount)*itemRadius;
 		this.xOffset = w/2-(this.gridW/2);
 		// console.log(this.xOffset);
-		this.yOffset = h/2-(this.gridH/2) + headerSize;
+		this.yOffset = h/2-(this.gridH/2);
 		for(var i=0; i<buttonCount; i++){
 			var obj = {
 				i:i,

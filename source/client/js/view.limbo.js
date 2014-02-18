@@ -4,9 +4,11 @@ scrumapp.views["limbo"] = {
 	//
 	init: function(){
 		this.setStatus();
-
-		$('#startHand').bind('click', $.proxy(this.startHand, this));
-		
+		if(PokerServer.clientType == "dealer"){
+			$('#startHand').bind('click', $.proxy(this.startHand, this));
+		}else{
+			$('startHand').remove();
+		}
 		
 	},
 	startHand: function(e){

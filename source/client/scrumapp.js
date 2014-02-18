@@ -60,7 +60,7 @@ var scrumapp = {
 			this.setView("setup");
 		}else{
 			this.setView("jointable");
-			$('#secretCode').addClass('transp');
+			$('#input').addClass('transp');
 		}
 	},
 	setView: function(screenName){

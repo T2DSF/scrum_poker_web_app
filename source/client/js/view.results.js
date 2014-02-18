@@ -6,15 +6,14 @@ scrumapp.views["results"] = {
 	
 
 	init: function(){
+		
 		// var $('#restartHand') = $('#restartHand');
 		$('#restartHand').bind('click', $.proxy(this.restartHand, this));
 		this.setStatus();
 		if(PokerServer.clientType == "dealer"){
-			if($('#restartHand').hasClass('hidden')){
-				$('#restartHand').removeClass('hidden');
-			}
+			//
 		}else{
-			$('#restartHand').addClass('hidden');
+			$('#restartHand').remove();
 		}
 		// console.log("table.init() called");
 		this.initCanvas();

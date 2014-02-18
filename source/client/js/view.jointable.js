@@ -25,8 +25,8 @@ scrumapp.views["jointable"] = {
 	// join table button handler
 	handleJoinTableClick: function(e) {
 		// console.log("handleJoinTableClick();");
-		if($('#secretCode').hasClass('transp')){
-			$('#secretCode').toggleClass('transp');
+		if($('#input').hasClass('transp')){
+			$('#input').removeClass('transp');
 			$('#newTableBtn').toggleClass('transp');
 			$('#newTableBtn').unbind('mousedown touchstart', $.proxy(this.handleNewTableClick, this));
 			// $('#secretCode').addClass('notransp');
@@ -43,15 +43,16 @@ scrumapp.views["jointable"] = {
 	//
 	//
 	handleTableConnect: function(data) {
+		console.log("handleTableConnect", PokerServer.clientType);
 		// console.log("handleTableConnect", PokerServer.tableId, data, +"  "+PokerServer.clientType);
 
 		scrumapp.setView("limbo");
 		scrumapp.views["limbo"].showId(PokerServer.tableId);
+		
 		if(PokerServer.clientType == "dealer"){
-			$('#startHand').removeClass('hidden');
 			$('footer div#status').text("start when you're ready");
 		}else{
-			$('#startHand').addClass('hidden');
+			$('#startHand').remove();
 		}
 		//
 	},

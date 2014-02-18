@@ -10,11 +10,10 @@ scrumapp.views["progress"] = {
 		this.setStatus();
 
 		if(PokerServer.clientType == "dealer"){
-			if($('#endHand').hasClass('hidden')){
-				$('#endHand').removeClass('hidden');
-			}
+			//
 		}else{
-			$('#endHand').addClass('hidden');
+			console.log("removing #endHand, "+PokerServer.clientType);
+			$('#endHand').remove();
 		}
 
 		// console.log("table.init() called");
@@ -67,7 +66,7 @@ scrumapp.views["progress"] = {
 			return false;
 		}
 		var centerX = Math.floor(canvas.width / 2);
-    	var centerY = Math.floor(canvas.height / 2)-50;
+    	var centerY = Math.floor(canvas.height / 2)-100;
     	var radius = Math.floor(canvas.width / 2)*.8;
 
 	    var arcSpanRadians = this.degreesToRadians(arcSpan);
