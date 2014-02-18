@@ -82,7 +82,7 @@ scrumapp.views["table"] = {
 
 			if(dist < this.btnRad){
 				obj.isClicked = true;
-				if(event.type == "mousedown"){
+				if(event.type == "mousedown" || event.type == "touchstart"){
 					var score = this.fibNums[obj.i];
 					scrumapp.curScore = score;
 					this.handleScoreSelected(score);
