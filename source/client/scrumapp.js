@@ -13,7 +13,7 @@ var scrumapp = {
 
 	init: function(){
 		if(this.checkifPopupNeeded){
-			this.popup();
+			// this.popup();
 			console.log("this is not standalone");			
 		}else{
 			// this.popup();
