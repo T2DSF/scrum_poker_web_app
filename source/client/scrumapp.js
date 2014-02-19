@@ -9,17 +9,15 @@ var scrumapp = {
 	},
 	curScore: 0,
 	curScreen: "",
-	//initScreen(),
-
+	//entry into the app
 	init: function(){
-		if(this.checkifPopupNeeded){
+		//TODO add popup code
+		if(this.checkifPopupNeeded()){
 			// this.popup();
-			console.log("this is not standalone");			
+			// console.log("this is not standalone");			
 		}else{
-			// this.popup();
-			console.log("this is in the standalone");
+			// console.log("popup not needed");
 		}
-		console.log(window.navigator.platform);
 		this.initScreen();
 		var joinView = scrumapp.views["jointable"];
 		var limboView = scrumapp.views["limbo"];
@@ -39,7 +37,9 @@ var scrumapp = {
 		PokerServer.handleTableErrorCallback(this.handleTableErrorCallback);
 		//
 	},
+	//TODO - encourage user to add to homescreen
 	checkifPopupNeeded:function(){
+		
 		if (("standalone" in window.navigator) && !window.navigator.standalone){
 			//standalone property exists, standalone not set
 			return true;
@@ -49,13 +49,14 @@ var scrumapp = {
 		}
 
 	},
+	//generic preventDefault method
 	prevent: function(e){
 		e.preventDefault();
-		console.log(e);
+		// console.log(e);
 	},
+	//changes view based on username 
 	initScreen: function(){
-
-		console.log("initScreen");
+		// console.log("initScreen");
 		if( !this.ls.get_local_storage_name() ){
 			this.setView("setup");
 		}else{
@@ -63,6 +64,7 @@ var scrumapp = {
 			$('#input').addClass('transp');
 		}
 	},
+	//main view-change method, transitions go here
 	setView: function(screenName){
 		// console.log("***** setView: "+screenName);
 		var $activeScreen = $("#container .active")[0];
@@ -70,27 +72,23 @@ var scrumapp = {
 	        $("div.active").toggleClass("active");
 	    }
 	   var id = "#"+screenName;
-	   // console.log(id);
 	   this.curScreen=screenName;
 	   $(id).addClass('active');
-	   // console.log(this.views.length);
 	   this.views[screenName].init();
 
 	},
-	handleClick: function(e){
-		e.preventDefault();
-	},
+	//if non-existent tableId is entered
 	handleTableErrorCallback: function(e){
-		console.log("*   *error: "+ e);
+		// console.log("*   *error: "+ e);
 		for(var p in e){
-			console.log(p+ " "+ e[p]);
+			// console.log(p+ " "+ e[p]);
 		}
 		if(e.type == "invalidId"){
 			$('footer div#status').text("that id doesn't exist!");
 		}
 	},
 	resized: function(event){
-		console.log("ersize");
+		// console.log("ersize");
 		scrumapp.views["progress"].initCanvas();
 	},
 	popup:function(){

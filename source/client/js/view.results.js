@@ -6,8 +6,6 @@ scrumapp.views["results"] = {
 	
 
 	init: function(){
-		
-		// var $('#restartHand') = $('#restartHand');
 		$('#restartHand').bind('click', $.proxy(this.restartHand, this));
 		this.setStatus();
 		if(PokerServer.clientType == "dealer"){
@@ -15,19 +13,13 @@ scrumapp.views["results"] = {
 		}else{
 			$('#restartHand').remove();
 		}
-		// console.log("table.init() called");
 		this.initCanvas();
-		// this.initTimer();
 	},
 	initCanvas: function(){	
 		this.c = document.getElementById('resultscanvas');
 		this.ctx = this.c.getContext('2d');
 		this.ctx.font = this.fontSize+'pt '+'universcondensed';
 		this.ctx.textAlign = "center";
-	},
-	initTimer: function(){
-        // window.requestAnimationFrame($.proxy(this.initTimer, this));
-        // this.draw();
 	},
 	restartHand: function(e){
 		// console.log("results.restartHand called");
@@ -181,16 +173,6 @@ scrumapp.views["results"] = {
 		ctx.rect(obj.x, obj.y, obj.w, obj.h);
         ctx.fillStyle = scrumapp.colors.color3;
         ctx.fill();
-	    // var imageObj = new Image();
-  //     	imageObj.onload = function() {
-  //       	var pattern = ctx.createPattern(imageObj, 'repeat');
-
-	 //        ctx.rect(obj.x, obj.y, obj.w, obj.h);
-	 //        ctx.fillStyle = pattern;
-	 //        ctx.fill();
-
-	 //      };
-  //     imageObj.src = 'img/bg_pat.png';
 	},
 	drawText: function(ctx, t){
 		ctx.globalAlpha = 1;
@@ -203,7 +185,6 @@ scrumapp.views["results"] = {
 		ctx.fillText(t.msg, t.x, t.y);
 	},
 	sortData: function(data){
-
 		var obj = {};
 		var sum = 0;
 		var items = 0;
@@ -234,7 +215,6 @@ scrumapp.views["results"] = {
 			}
 
 		}
-		// console.log(sum+" "+items);
 		var ave = sum/items;
 		obj.totalVotes = items;
 		obj.highest = highest;
@@ -242,7 +222,6 @@ scrumapp.views["results"] = {
 		//to keep one decimal place
 		ave = Math.round(ave * 10) / 10;
 		// ave = Math.round(ave * 100) / 100;
-		// ave = Math.round(ave);
 		obj.average = ave;
 		return obj;
 	},

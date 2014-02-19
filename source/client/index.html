@@ -9,26 +9,15 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta name="format-detection" content="telephone=no">
 		<link rel="apple-touch-icon" sizes="120x120" href="img/appicon/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="img/appicon/apple-touch-icon-15220x152.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/appicon/apple-touch-icon-152x152.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="img/appicon/apple-touch-icon-76x76.png">
+		<link rel="shortcut icon" href="img/appicon/apple-touch-icon-152x152.png">
 		
+		<script src="js/libs/jquery-1.6.2.min.js"></script>
 		<title>Scrum Poker - Sony</title>
 		
-		<!-- <link type="text/css" href="css/normalize.css" rel="stylesheet" /> -->
 		<link href="css/style.css" rel="stylesheet" />
 		<!--  -->
-	 	<script src="js/libs/jquery-1.6.2.min.js"></script>
-		<script src="scrumapp.js"></script>
-		<script src="js/view.setup.js"></script>
-		<script src="js/view.jointable.js"></script>
-		<script src="js/view.limbo.js"></script>
-		<script src="js/view.table.js"></script>
-		<script src="js/view.progress.js"></script>
-		<script src="js/view.results.js"></script>
-		<script src="js/local_storage.js"></script>
-		<script src="js/libs/modernizr-2.0.6.min.js"></script>
-  		<script src="http://t2dsf-scrum-poker-server.nodejitsu.com:80/socket.io/socket.io.js"></script>
-  		<script src="js/client.js"></script>
 	</head>
 
 	<body>	
@@ -73,12 +62,22 @@
 			<!--  -->
 			<footer>
 				<div class="navItem" id="settings"></div>
-				<div id="status">default status</div>
+				<div id="status"></div>
 				<div class="navItem" id="info"></div>
 			</footer>
 		</div>
 		
 		
+		<script src="scrumapp.js"></script>
+		<script src="js/view.setup.js"></script>
+		<script src="js/view.jointable.js"></script>
+		<script src="js/view.limbo.js"></script>
+		<script src="js/view.table.js"></script>
+		<script src="js/view.progress.js"></script>
+		<script src="js/view.results.js"></script>
+		<script src="js/local_storage.js"></script>
+		<script src="http://t2dsf-scrum-poker-server.nodejitsu.com:80/socket.io/socket.io.js"></script>
+  		<script src="js/client.js"></script>
 		
 	</body>
 </html>

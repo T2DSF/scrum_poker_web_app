@@ -137,7 +137,7 @@ input
 {
 	/*display: none;*/
     visibility: hidden;
-    
+
 }
 .transp
 {
@@ -161,11 +161,10 @@ button.submit
 
     color: white;
     border: 1px solid #00afea;
+    background-color: #00afea;
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
             border-radius: 4px;
-    background-color: #00afea;
-
         -ms-border-radius: 4px;
          -o-border-radius: 4px;
 }
@@ -176,6 +175,11 @@ button.submit:hover
 {
     border: 1px solid #ec2761;
     background-color: #ec2761;
+    -webkit-border-radius: 4px;
+   	-moz-border-radius: 4px;
+    border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
 }
 footer
 {

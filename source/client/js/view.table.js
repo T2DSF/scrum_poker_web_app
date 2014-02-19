@@ -18,14 +18,11 @@ scrumapp.views["table"] = {
 	xOffset: undefined, 
 	yOffset: undefined,
 	firstRun: true,
-	// test: {x:40, y:40},
-	
 
 	init: function(){
 		this.itemRadius = 140-(this.margin*2),
 		this.btnRad = this.itemRadius/2.7;
 		this.setStatus();
-		// console.log("table.init() called "+ this.fibNums);
 		this.initEvents();
 		if(this.firstRun){
 			this.initCanvas();
@@ -54,32 +51,20 @@ scrumapp.views["table"] = {
 	},
 	// callback when the dealer starts a new hand
 	handleHandBegin: function(issueNumber) {
-		console.log("hand begin", issueNumber);
 		scrumapp.setView("table");
 	},
 	pressedCheck: function(event){
 		// console.log("pressedCheck() "+event.type);
-		
 		var obj; 
 		var rect = this.c.getBoundingClientRect();
 		var eClickXY = this.getXYFromEvent(event);
 		var clickPt = {x:eClickXY.x - rect.left, y:eClickXY.y - rect.top};
-		// console.log(clickPt.x+" "+clickPt.y+" rectleft: "+rect.left+" recttop: "+rect.top);
-		// var clickPt = {x:e.pageX-this.xOffset-(this.itemRadius*2), y:e.pageY};
 		var dist;
-		// this.test = {x: e.pageX-this.xOffset, y:e.pageY};
 		for (var i = 0; i < this.btnArr.length; i++) {
 			obj = this.btnArr[i];
 
 		dist = this.checkDist(obj, clickPt);
-/*				var ctx = this.ctx;
-			 ctx.beginPath();
-			ctx.arc(obj.x, obj.y, this.btnRad, 0, Math.PI*2);
-			ctx.fillStyle = '#f00';
-			ctx.fill();
-*/
-
-
+		
 			if(dist < this.btnRad){
 				obj.isClicked = true;
 				if(event.type == "mousedown" || event.type == "touchstart"){
@@ -119,7 +104,6 @@ scrumapp.views["table"] = {
 		return dist;
 	},
 	initGrid: function(){
-		// console.log("initGrid()");
 		var gridCount = this.gridCount, 
 		itemRadius = this.itemRadius, 
 		buttonCount = this.buttonCount,
@@ -130,7 +114,6 @@ scrumapp.views["table"] = {
 		this.gridW = ((buttonCount-1)%gridCount)*itemRadius;
 		this.gridH = Math.floor((buttonCount-1)/gridCount)*itemRadius;
 		this.xOffset = w/2-(this.gridW/2);
-		// console.log(this.xOffset);
 		this.yOffset = h/2-(this.gridH/2);
 		for(var i=0; i<buttonCount; i++){
 			var obj = {
@@ -144,7 +127,6 @@ scrumapp.views["table"] = {
 	},
 	draw: function(){
 		var ctx = this.ctx;
-		//console.log('draw()');
 		ctx.clearRect(0,0,this.w, this.h);
 		
 		
@@ -161,7 +143,6 @@ scrumapp.views["table"] = {
 			
 			ctx.fill();
 
-			
 			if(obj.isClicked){
 				ctx.fillStyle = scrumapp.colors.color4;
 			}else{
@@ -170,13 +151,6 @@ scrumapp.views["table"] = {
 			ctx.fillText(this.fibNums[i], obj.x, obj.y + this.fontSize/2);
 
 		}
-
-		// ctx.beginPath();
-		// ctx.arc(this.test.x, this.test.y, 10, 0, Math.PI*2);
-		// ctx.fillStyle = '#f00';
-		// ctx.fill();
-		
-
 	},
 	getXYFromEvent: function(event) {
 		// console.log(event);

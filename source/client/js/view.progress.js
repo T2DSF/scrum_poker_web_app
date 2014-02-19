@@ -41,7 +41,6 @@ scrumapp.views["progress"] = {
 	},
 	// callback when a player makes a selection
 	handleHandProgress: function(percent) {
-		// console.log("hand progress", percent);
 		var me = scrumapp.views["progress"];
 		var p = percent.issueProgress;
 		me.draw(p);
@@ -76,7 +75,6 @@ scrumapp.views["progress"] = {
 	    
 	    ctx.arc(centerX, centerY, radius, 0, Math.PI*2);
 	    ctx.fillStyle = scrumapp.colors.color3;
-	    // ctx.fillStyle = "rgba(0,0,0,.2)";
 	    ctx.fill();
 	    ctx.closePath();
 
