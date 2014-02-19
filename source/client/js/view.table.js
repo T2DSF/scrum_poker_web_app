@@ -18,6 +18,7 @@ scrumapp.views["table"] = {
 	xOffset: undefined, 
 	yOffset: undefined,
 	firstRun: true,
+	// test:{x:40,y:40},
 
 	init: function(){
 		this.itemRadius = 140-(this.margin*2),
@@ -59,6 +60,7 @@ scrumapp.views["table"] = {
 		var rect = this.c.getBoundingClientRect();
 		var eClickXY = this.getXYFromEvent(event);
 		var clickPt = {x:eClickXY.x - rect.left, y:eClickXY.y - rect.top};
+		// this.test = {x:clickPt.x, y:clickPt.y};
 		var dist;
 		for (var i = 0; i < this.btnArr.length; i++) {
 			obj = this.btnArr[i];
@@ -69,6 +71,7 @@ scrumapp.views["table"] = {
 				obj.isClicked = true;
 				if(event.type == "mousedown" || event.type == "touchstart"){
 					var score = this.fibNums[obj.i];
+					// console.log(score);
 					scrumapp.curScore = score;
 					this.handleScoreSelected(score);
 				}
@@ -84,11 +87,12 @@ scrumapp.views["table"] = {
 		scrumapp.setView("progress");
 	},
 	handleMouseMove:function(event){
+		// console.log("handleMouseMove()");
 		event.preventDefault();	
 		this.pressedCheck(event);
 	},
 	handleClick: function(e){
-		console.log("pressed");
+		console.log("handleClick()");
 		e.preventDefault();	
 		this.pressedCheck(e);	
 		
@@ -151,6 +155,11 @@ scrumapp.views["table"] = {
 			ctx.fillText(this.fibNums[i], obj.x, obj.y + this.fontSize/2);
 
 		}
+		// ctx.beginPath();
+		// ctx.fillStyle = scrumapp.colors.color2;
+		// ctx.arc(this.test.x, this.test.y, 10, 0, Math.PI*2);
+		// ctx.fill();
+
 	},
 	getXYFromEvent: function(event) {
 		// console.log(event);

@@ -1,5 +1,6 @@
 scrumapp.views["jointable"] = {
-	pause:true,
+	joinPause:true,
+	newPause:true,
 
 	init: function(){
 		this.setStatus();
@@ -14,21 +15,32 @@ scrumapp.views["jointable"] = {
 		$('footer div#status').text("good to see you, "+ name +"!");
 	},
 	handleNewTableClick: function(e){
-		// console.log("handleNewTableClick()");
+		var self = this;
 		$('footer div#status').text("starting new table");
-		var name = scrumapp.ls.get_local_storage_name();
-		if(name!=""){
-			PokerServer.createNewPokerTable(name, this.handleTableConnect);
+
+		if(this.newPause){
+			console.log("handleNewTableClick()");
+
+			this.newPause = false;
+			
+			var name = scrumapp.ls.get_local_storage_name();
+			if(name!=""){
+				PokerServer.createNewPokerTable(name, this.handleTableConnect);
+			}
+
 		}
+		setTimeout(function(){self.newPause = true},2000);
+		
 	},
 
 	// join table button handler
 	handleJoinTableClick: function(e) {
 		var self = this;
-		// console.log("click "+this.pause);
-		//the event is fired twice for some reason, added the pause functionality to prevent code execution
-		if(this.pause){
-			this.pause = false;
+		//the event is fired twice for some reason, added the joinPause functionality to prevent code execution
+		if(this.joinPause){
+			console.log("handleJoinTableClick ");
+		
+			this.joinPause = false;
 			//console.log("handleJoinTableClick();");
 			$('#submitCodeBtn').unbind('mouseup touchend', $.proxy(this.handleJoinTableClickEnd, this));
 			if($('#input').hasClass('transp')){
@@ -44,7 +56,7 @@ scrumapp.views["jointable"] = {
 				}
 			}
 		}
-		setTimeout(function(){console.log(self.pause = true)},1000);
+		setTimeout(function(){self.joinPause = true},1000);
 		
 	},
 	handleTableConnect: function(data) {

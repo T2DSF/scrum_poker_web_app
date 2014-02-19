@@ -3,6 +3,7 @@ scrumapp.views["progress"] = {
 	c: undefined,
 	ctx: undefined,
 	fontSize: 30,
+	endPause:true,
 	
 
 	init: function(){
@@ -12,7 +13,6 @@ scrumapp.views["progress"] = {
 		if(PokerServer.clientType == "dealer"){
 			//
 		}else{
-			console.log("removing #endHand, "+PokerServer.clientType);
 			$('#endHand').remove();
 		}
 
@@ -31,7 +31,14 @@ scrumapp.views["progress"] = {
         this.draw();
 	},
 	endHand: function(e){
-		PokerServer.dealer.endHand();
+		var self = this;
+		if(this.endPause){
+			this.endPause = false;
+			console.log("endHand");
+			PokerServer.dealer.endHand();
+		}
+		setTimeout(function(){self.endPause = true},2000);
+		
 	},
 	setStatus: function(){
 		$('footer div#status').text("hurry up you guys...");

@@ -1,4 +1,5 @@
 scrumapp.views["limbo"] = {
+	startPause: true,
 	tId: undefined,
 	currentNumberOfPlayers: 0,
 	//
@@ -12,7 +13,14 @@ scrumapp.views["limbo"] = {
 		
 	},
 	startHand: function(e){
-		PokerServer.dealer.startHand();
+		var self = this;
+		if(this.startPause){	
+			this.startPause = false;
+		
+			console.log("limbo.startHand()");
+			PokerServer.dealer.startHand();
+		}
+		setTimeout(function(){self.startPause = true},2000);
 	},
 	setStatus: function(){
 		var name = scrumapp.ls.get_local_storage_name();

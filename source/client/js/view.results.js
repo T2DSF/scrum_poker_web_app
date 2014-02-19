@@ -3,6 +3,7 @@ scrumapp.views["results"] = {
 	c: undefined,
 	ctx: undefined,
 	fontSize: 30,
+	restartPause:true,
 	
 
 	init: function(){
@@ -22,9 +23,13 @@ scrumapp.views["results"] = {
 		this.ctx.textAlign = "center";
 	},
 	restartHand: function(e){
-		// console.log("results.restartHand called");
-		//scrumapp.setView("table");
-		PokerServer.dealer.startHand();
+		var self = this;
+		if(this.restartPause){
+			this.restartPause = false;
+			console.log("results.restartHand called");
+			PokerServer.dealer.startHand();
+		}setTimeout(function(){self.restartPause = true},2000);
+		
 	},
 	setStatus: function(){
 		$('footer div#status').text("results are in...");
@@ -191,8 +196,9 @@ scrumapp.views["results"] = {
 		var lowest = {};
 		var highest = {};
 		for (var i = 0; i < data.length; i++) {
+			console.log(data[i].name+" "+data[i].handValue);
 			sum = sum+Number(data[i].handValue);
-			items++;
+			items+=1;
 			var newObj = data[i];
 			if(i==0){
 				lowest.score = newObj.handValue;

@@ -11,7 +11,7 @@ scrumapp.views["setup"] = {
 		$('footer div#status').text("welcome, guest!");
 	},
 	setUsername: function(){
-		// console.log("view.setup.setUsername() called ");
+		console.log("view.setup.setUsername() called ");
 		// console.log("caller is " + arguments.callee.caller.toString());
 		var b = $('#playerNameInput').val();
 		if (b){
